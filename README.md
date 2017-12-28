@@ -1,3 +1,10 @@
+# Resources
+* [Scoundrel rules](http://www.stfj.net/art/2011/Scoundrel.pdf)
+* [Game varient idea](https://boardgamegeek.com/thread/1805997/seems-be-almost-identical-scoundrel)
+* [Design ideas](https://hundredrabbits.itch.io/donsol)
+
+===
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
