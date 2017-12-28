@@ -1,0 +1,33 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import Card from './Card';
+
+class Potion extends Component {
+  static propTypes = {
+    potionDrank: PropTypes.bool.isRequired,
+    hp: PropTypes.number.isRequired,
+    number: PropTypes.number.isRequired,
+    updatePlayer: PropTypes.func.isRequired,
+    handleClick: PropTypes.func.isRequired,
+    suit: PropTypes.string.isRequired
+  };
+
+  onClick = () => {
+    if (!this.props.potionDrank) {
+      let effect = this.props.hp + this.props.number;
+      effect = (effect > 21) ? 21 : effect;
+      this.props.updatePlayer({hp: effect, potionDrank: true});
+    }
+    this.props.handleClick({ suit: this.props.suit, number: this.props.number });
+  }
+
+  render() {
+    return (
+      <Card suit={this.props.suit}
+            number={this.props.number}
+            onClick={this.onClick} />
+    );
+  }
+}
+
+export default Potion;

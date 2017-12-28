@@ -1,0 +1,83 @@
+.card {
+  font-family: Lora, serif;
+  font-weight: 700;
+  float: left;
+  margin: 0 10px 10px 0;
+  width: 150px;
+  height: 200px;
+  background: -webkit-gradient(linear, left top, right bottom, from(white), to(#f0f0f0));
+  background: linear-gradient(left top, white, #f0f0f0);
+  border-radius: 5px;
+  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+          box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+.card.red {
+  color: crimson;
+}
+.card .corner {
+  position: absolute;
+  text-align: center;
+}
+.card .corner.top {
+  top: 10px;
+}
+.card .corner.left {
+  left: 10px;
+}
+.card .corner.bottom {
+  bottom: 10px;
+}
+.card .corner.right {
+  right: 10px;
+}
+.card .corner h1 {
+  font-size: 1.5em;
+  margin: 0;
+}
+.card .corner .pip {
+  font-size: 1.3em;
+}
+.card .corner:last-of-type {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+.card .pip {
+  font-family: serif;
+}
+.card .pip.clubs:before {
+  content: '\02663';
+}
+.card .pip.hearts:before {
+  content: '\02665';
+}
+.card .pip.spades:before {
+  content: '\02660';
+}
+.card .pip.diamonds:before {
+  content: '\02666';
+}
+.card .pips .pip {
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: 2.3em;
+}
+.card .pips .pip.flip {
+  -webkit-transform: translate(-50%, -50%) rotate(180deg);
+          transform: translate(-50%, -50%) rotate(180deg);
+}
+.card .pips h1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: 4em;
+  border-width: 1px;
+  border-style: solid;
+  text-align: center;
+  line-height: 125px;
+  width: 75px;
+  margin: 0;
+}

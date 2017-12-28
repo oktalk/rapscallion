@@ -1,0 +1,31 @@
+@import url(https://fonts.googleapis.com/css?family=Lora:400,700);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css);
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #222;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.App-room {
+  display: flex;
+  justify-content: center;
+  padding: 25px 0;
+}
+
+.App-shield {
+  display: flex;
+  justify-content: center;
+}

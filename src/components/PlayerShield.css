@@ -1,0 +1,9 @@
+.Player-shield {
+  position: relative;
+}
+
+.Player-shieldRank {
+  position: absolute;
+  z-index: 1;
+  top: 40%;
+}
