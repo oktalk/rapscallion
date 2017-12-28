@@ -1,5 +1,6 @@
 {
   "name": "scoundrel",
+  "homepage" : "http://oktalk.github.io/scoundrel",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
