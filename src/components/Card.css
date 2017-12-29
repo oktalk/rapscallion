@@ -5,7 +5,7 @@
   margin: 0 10px 10px 0;
   width: 150px;
   height: 200px;
-  background: linear-gradient(left top, white, #f0f0f0);
+  background: linear-gradient(to left top, white, #f0f0f0);
   border-radius: 5px;
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
   position: relative;
