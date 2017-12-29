@@ -22,10 +22,22 @@
 .App-room {
   display: flex;
   justify-content: center;
+  flex-flow: row nowrap;
   padding: 25px 0;
+  overflow: hidden;
 }
+@media (max-width: 576px) {
+  .App-room > .card:not(:first-child) { margin-left: -75px; }
+}
+
 
 .App-shield {
   display: flex;
   justify-content: center;
+}
+@media (max-width: 576px) {
+  .App-shield { margin-top: -125px; }
+  .App-shield .card {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+  }
 }

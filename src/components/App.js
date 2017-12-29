@@ -124,11 +124,10 @@ class App extends Component {
         </p>
         <p>HP: {this.state.hp} Shield: {this.state.shield}/{this.state.shieldRank} XP: {this.state.xp} Progress: {this.state.progress} Potions drank: {this.state.potionDrank}</p>
 
-        <div className="container">
-          <div className="App-room is-clearfix">
-            {this.renderRoom()}
-          </div>
+        <div className="App-room is-clearfix">
+          {this.renderRoom()}
         </div>
+
         <div className="App-shield">
           {this.state.shield > 0 && <PlayerShield shield={this.state.shield} shieldRank={this.state.shieldRank} />}
         </div>
