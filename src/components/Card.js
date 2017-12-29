@@ -111,27 +111,29 @@ class Card extends Component {
     }
   }
 
+
+  face(number) {
+    switch (number) {
+      case 11:
+        return 'J';
+      case 12:
+        return 'Q';
+      case 13:
+        return 'K';
+      case 14:
+        return 'A';
+      case 21:
+        return 'I';
+      default:
+        return number;
+    }
+  }
+
   renderCenterPips = () => {
     const faceCards = [11, 12, 13, 14, 21];
     let pips = [];
     if (faceCards.includes(this.props.number)) {
-      function face(number) {
-        switch (number) {
-          case 11:
-            return 'J';
-          case 12:
-            return 'Q';
-          case 13:
-            return 'K';
-          case 14:
-            return 'A';
-          case 21:
-            return 'I';
-          default:
-            return;
-        }
-      }
-      pips = <h1 key={this.props.suit + this.props.number}>{face(this.props.number)}</h1>;
+      pips = <h1 key={this.props.suit + this.props.number}>{this.face(this.props.number)}</h1>;
     } else {
       const pipStyle = this.centerPipsStyle();
       for (let i = 0; i < this.props.number; i++) {
@@ -145,14 +147,14 @@ class Card extends Component {
     return (
       <div className={'card ' + this.suitColor()} onClick={this.props.onClick}>
         <div className="corner top left">
-          <h1>{this.props.number}</h1>
+          <h1>{this.face(this.props.number)}</h1>
           <div className={'pip ' + this.props.suit}><p></p></div>
         </div>
         <div className="pips">
           {this.renderCenterPips()}
         </div>
         <div className="corner bottom right">
-          <h1>{this.props.number}</h1>
+          <h1>{this.face(this.props.number)}</h1>
           <div className={'pip ' + this.props.suit}><p></p></div>
         </div>
       </div>

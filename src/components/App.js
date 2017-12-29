@@ -17,7 +17,7 @@ class App extends Component {
       shields: 0,
       shieldsCount: 0,
     },
-    hp: 10,
+    hp: 21,
     xp: 0,
     shield: 0,
     shieldRank: 0,

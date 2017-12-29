@@ -13,7 +13,7 @@ class Shield extends Component {
   };
 
   onClick = () => {
-    const effect = this.props.number;
+    const effect = (this.props.number < 11) ? this.props.number : 11;
     this.props.updatePlayer({ shield: effect, shieldRank: 0 });
     this.props.handleClick({ suit: this.props.suit, number: this.props.number });
   }
