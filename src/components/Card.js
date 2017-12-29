@@ -112,7 +112,7 @@ class Card extends Component {
   }
 
   renderCenterPips = () => {
-    const faceCards = [11, 12, 13, 14];
+    const faceCards = [11, 12, 13, 14, 21];
     let pips = [];
     if (faceCards.includes(this.props.number)) {
       function face(number) {
@@ -125,6 +125,8 @@ class Card extends Component {
             return 'K';
           case 14:
             return 'A';
+          case 21:
+            return 'I';
           default:
             return;
         }
