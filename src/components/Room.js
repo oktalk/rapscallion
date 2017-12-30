@@ -39,11 +39,11 @@ class Room extends Component {
             default:
               return (<Enemy
                 {...card}
+                xp={this.props.xp}
                 shield={this.props.shield}
                 shieldRank={this.props.shieldRank}
                 key={card.suit + card.number}
                 hp={this.props.hp}
-                potionDrank={this.props.potionDrank}
                 updatePlayer={this.props.updatePlayer}
                 handleClick={this.props.handleClick} />);
           }

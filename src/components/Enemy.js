@@ -4,7 +4,7 @@ import Card from './Card';
 
 class Enemy extends Component {
   static propTypes = {
-    potionDrank: PropTypes.bool.isRequired,
+    xp: PropTypes.number.isRequired,
     hp: PropTypes.number.isRequired,
     number: PropTypes.number.isRequired,
     updatePlayer: PropTypes.func.isRequired,
@@ -18,6 +18,7 @@ class Enemy extends Component {
     let effect = this.props.hp;
     let setShield = this.props.shield;
     let setShieldRank = this.props.shieldRank;
+    let setXP = this.props.xp + this.props.number;
     let setGameState = '';
 
     if(this.props.shield === 0) {
@@ -38,9 +39,10 @@ class Enemy extends Component {
       setGameState = 'Game over';
       setShield = 0;
       setShieldRank = 0;
+      setXP = this.props.xp
     }
 
-    this.props.updatePlayer({ hp: effect, shield: setShield, shieldRank: setShieldRank, gameState: setGameState });
+    this.props.updatePlayer({ hp: effect, shield: setShield, shieldRank: setShieldRank, xp: setXP, gameState: setGameState });
     this.props.handleClick({ suit: this.props.suit, number: this.props.number });
   }
 
