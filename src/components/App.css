@@ -27,17 +27,17 @@
   overflow: hidden;
 }
 @media (max-width: 576px) {
-  .App-room > .card:not(:first-child) { margin-left: -75px; }
+  .App-room > .card:not(:first-child) { margin: 0 0 0 -75px; }
 }
-
 
 .App-shield {
   display: flex;
   justify-content: center;
+  margin-top: -75px;
+}
+.App-shield .card {
+  box-shadow: 0 10px 30px rgba(72, 147, 154, 0.5), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
 @media (max-width: 576px) {
   .App-shield { margin-top: -125px; }
-  .App-shield .card {
-    box-shadow: 0 10px 30px rgba(72, 147, 154, 0.5), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
-  }
 }
