@@ -18,6 +18,7 @@ class Enemy extends Component {
     let effect = this.props.hp;
     let setShield = this.props.shield;
     let setShieldRank = this.props.shieldRank;
+    let setGameState = '';
 
     if(this.props.shield === 0) {
       effect = this.props.hp - this.props.number;
@@ -33,7 +34,12 @@ class Enemy extends Component {
       setShield = 0;
       setShieldRank = 0;
     }
-    const setGameState = (effect < 0) ? 'Game over' : '';
+    if (effect < 0) {
+      setGameState = 'Game over';
+      setShield = 0;
+      setShieldRank = 0;
+    }
+
     this.props.updatePlayer({ hp: effect, shield: setShield, shieldRank: setShieldRank, gameState: setGameState });
     this.props.handleClick({ suit: this.props.suit, number: this.props.number });
   }
