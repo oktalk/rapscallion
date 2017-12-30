@@ -122,6 +122,9 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Scoundrel</h1>
         </header>
+        <div className="progress-bar">
+          <span className="progress-bar-rating" style={{width: ((48 - this.state.progress) / 48 * 100) + '%'}}>{(Math.ceil((48 - this.state.progress) / 48 * 100)) + '% Complete'}</span>
+        </div>
         { this.state.progress > 0 &&
           <p className="App-intro">
             <button onClick={this.nextRoom} disabled={!this.state.isRoomComplete}>Next Room</button>

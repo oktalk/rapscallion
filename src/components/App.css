@@ -10,6 +10,38 @@
   padding: 20px;
   color: white;
 }
+@keyframes animate-width {
+  0% {
+    width: 0;
+  }
+  100% {
+    visibility: visible;
+  }
+}
+.progress-bar {
+  background-color: #2a2b2f;
+  box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.6);
+  padding: 3px;
+  margin-bottom: 20px;
+  margin-left: 0;
+}
+
+.progress-bar-rating {
+  position: relative;
+  border-radius: 4px;
+  display: inline-block;
+  width: 0;
+  height: 100%;
+  font-size: 10px;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  background-image: linear-gradient(to bottom, #ff4500 0%, #ff4500 47%, crimson 50%, crimson 100%);
+  width: 0;
+  transition: all 0.25s cubic-bezier(0.26, 0.01, 0.51, 1);
+}
 
 .App-title {
   font-size: 1.5em;
@@ -36,7 +68,9 @@
   margin-top: -75px;
 }
 .App-shield .card {
-  box-shadow: 0 10px 30px rgba(72, 147, 154, 0.5), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 10px rgba(72, 147, 154, .1), 0 10px 30px rgba(72, 147, 154, 0.5), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+  width: 180px;
+  height: 230px;
 }
 @media (max-width: 576px) {
   .App-shield { margin-top: -125px; }
