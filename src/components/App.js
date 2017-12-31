@@ -122,7 +122,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Scoundrel</h1>
+          <h1 className="App-title">Rapscallion</h1>
         </header>
         <div className="progress-bar">
           <span className="progress-bar-rating" style={{width: ((48 - this.state.progress) / 48 * 100) + '%'}}>{(Math.ceil((48 - this.state.progress) / 48 * 100)) + '% Complete'}</span>
