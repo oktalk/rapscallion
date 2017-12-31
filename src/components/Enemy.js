@@ -28,7 +28,7 @@ class Enemy extends Component {
     }
 
     if (this.props.shield > 0 && this.props.shieldRank === 0) {
-      setShieldRank = this.props.number;
+      setShieldRank = (this.props.breakableShield) ? this.props.number : 0;
     } else if (this.props.shieldRank >= this.props.number) {
       setShieldRank = this.props.number;
     } else {

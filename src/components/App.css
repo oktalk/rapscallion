@@ -4,9 +4,10 @@
 
 html,
 body {
-  background-color: #F1F0EC;
+  background-color: #152624;
   height: 100%;
   font-family: 'Roboto Condensed', sans-serif;
+  color: #777;
 }
 
 .App {
@@ -54,22 +55,31 @@ body {
 .button{
   background:transparent;
   transition:all .5s ease;
-  color:#152624;
+  color:#777;
   outline:none;
   box-shadow: 20px 38px 34px -26px hsla(0,0%,0%,.2);
   border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
 }
 .button:hover{
+  color: #ddd;
   box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
 }
 
 .button.lined.thin{
-  border:solid 2px #152624;
+  border:solid 2px #777;
+}
+
+.button[disabled] {
+  background-color: transparent;
+}
+.button[disabled]:hover {
+  color: #777;
+  background-color: transparent;
 }
 
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 2em;
   font-family: 'Princess Sofia', cursive;
   color: #ED143D;
   text-shadow: 0 1px 0 rgba(255, 255, 255, .09);

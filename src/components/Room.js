@@ -10,6 +10,7 @@ class Room extends Component {
     hp: PropTypes.number.isRequired,
     potionDrank: PropTypes.bool.isRequired,
     potionLimit: PropTypes.bool.isRequired,
+    breakableShield:  PropTypes.bool.isRequired,
     updatePlayer: PropTypes.func.isRequired,
     handleClick: PropTypes.func.isRequired,
     shield: PropTypes.number.isRequired,
@@ -46,6 +47,7 @@ class Room extends Component {
                 shieldRank={this.props.shieldRank}
                 key={card.suit + card.number}
                 hp={this.props.hp}
+                breakableShield={this.props.breakableShield}
                 updatePlayer={this.props.updatePlayer}
                 handleClick={this.props.handleClick} />);
           }
