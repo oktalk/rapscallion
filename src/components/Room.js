@@ -9,6 +9,7 @@ class Room extends Component {
     room: PropTypes.array.isRequired,
     hp: PropTypes.number.isRequired,
     potionDrank: PropTypes.bool.isRequired,
+    potionLimit: PropTypes.bool.isRequired,
     updatePlayer: PropTypes.func.isRequired,
     handleClick: PropTypes.func.isRequired,
     shield: PropTypes.number.isRequired,
@@ -25,6 +26,7 @@ class Room extends Component {
                 {...card}
                 key={card.suit + card.number}
                 hp={this.props.hp}
+                potionLimit={this.props.potionLimit}
                 potionDrank={this.props.potionDrank}
                 updatePlayer={this.props.updatePlayer}
                 handleClick={this.props.handleClick} />);

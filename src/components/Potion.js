@@ -17,7 +17,7 @@ class Potion extends Component {
       const maxHeal = (this.props.number < 11) ? this.props.number : 11;
       let effect = this.props.hp + maxHeal;
       effect = (effect > 21) ? 21 : effect;
-      this.props.updatePlayer({hp: effect, potionDrank: true});
+      this.props.updatePlayer({hp: effect, potionDrank: (this.props.potionLimit)});
     }
     this.props.handleClick({ suit: this.props.suit, number: this.props.number });
   }
