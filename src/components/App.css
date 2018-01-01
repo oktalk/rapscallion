@@ -18,6 +18,43 @@ body {
   background-color: #152624;
   padding: 20px;
 }
+
+.App-title {
+  font-size: 2em;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .09);
+}
+
+.App-intro {
+  font-size: large;
+  margin-bottom: 10px;
+}
+
+.App-room {
+  display: flex;
+  justify-content: center;
+  flex-flow: row nowrap;
+  padding: 25px 0;
+  overflow: hidden;
+}
+@media (max-width: 576px) {
+  .App-room > .card:not(:first-child) { margin: 0 0 0 -75px; }
+}
+
+.App-shield {
+  display: flex;
+  justify-content: center;
+  margin-top: -75px;
+}
+@media (max-width: 576px) {
+  .App-shield { margin-top: -150px; }
+}
+.App-shield .card {
+  box-shadow: 0 0 0 10px rgba(67, 170, 139, .1), 0 10px 30px rgba(67, 170, 139, 0.5), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+  width: 180px;
+  height: 230px;
+}
+
 @keyframes animate-width {
   0% {
     width: 0;
@@ -27,8 +64,6 @@ body {
   }
 }
 .progress-bar {
-  background-color: #152624;
-  box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.6);
   margin: 0 0 10px;
 }
 
@@ -75,42 +110,4 @@ body {
 .button[disabled]:hover {
   color: #777;
   background-color: transparent;
-}
-
-
-.App-title {
-  font-size: 2em;
-  font-family: 'Princess Sofia', cursive;
-  color: #ED143D;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, .09);
-}
-
-.App-intro {
-  font-size: large;
-  margin-bottom: 10px;
-}
-
-.App-room {
-  display: flex;
-  justify-content: center;
-  flex-flow: row nowrap;
-  padding: 25px 0;
-  overflow: hidden;
-}
-@media (max-width: 576px) {
-  .App-room > .card:not(:first-child) { margin: 0 0 0 -75px; }
-}
-
-.App-shield {
-  display: flex;
-  justify-content: center;
-  margin-top: -75px;
-}
-@media (max-width: 576px) {
-  .App-shield { margin-top: -150px; }
-}
-.App-shield .card {
-  box-shadow: 0 0 0 10px rgba(67, 170, 139, .1), 0 10px 30px rgba(67, 170, 139, 0.5), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
-  width: 180px;
-  height: 230px;
 }

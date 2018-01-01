@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Card.css';
+import dragon from '../images/dragon.svg';
+import potion from '../images/potion.svg';
+import shield from '../images/shield.svg';
 
 class Card extends Component {
   static propTypes = {
@@ -142,21 +145,40 @@ class Card extends Component {
     }
     return pips;
   }
+  centerPip = (dragon, potion, shield) => {
+    switch (this.props.suit) {
+      case 'hearts':
+        return potion;
+      case 'diamonds':
+        return shield;
+      default:
+        return dragon;
+    }
+  }
+
+  cardLabel = () => {
+    switch (this.props.suit) {
+      case 'hearts':
+        return 'Potion';
+      case 'diamonds':
+        return 'Shield';
+      default:
+        return 'Demon';
+    }
+  }
 
   render() {
+    var divStyle = {
+      backgroundImage: 'url(' + this.centerPip(dragon, potion, shield) + ')'
+    };
     return (
       <div className={'card ' + this.suitColor()} onClick={this.props.onClick}>
         <div className="corner top left">
-          <h1>{this.face(this.props.number)}</h1>
+          <h1>{((this.props.suit === 'clubs' || this.props.suit === 'spades' || this.props.suit === 'jack' || this.props.suit === 'joker') ? '-' : '') + this.props.number}</h1>
           <div className={'pip ' + this.props.suit}><p></p></div>
         </div>
-        <div className="pips">
-          {this.renderCenterPips()}
-        </div>
-        <div className="corner bottom right">
-          <h1>{this.face(this.props.number)}</h1>
-          <div className={'pip ' + this.props.suit}><p></p></div>
-        </div>
+        <div className="pips center-pip" style={divStyle} />
+        <div className="card-label">{this.cardLabel()}</div>
       </div>
     );
   }
