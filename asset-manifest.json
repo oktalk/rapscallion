@@ -1,11 +1,9 @@
 {
-  "main.css": "static/css/main.fa96663e.css",
-  "main.css.map": "static/css/main.fa96663e.css.map",
-  "main.js": "static/js/main.37f71029.js",
-  "main.js.map": "static/js/main.37f71029.js.map",
+  "main.css": "static/css/main.625ab04a.css",
+  "main.css.map": "static/css/main.625ab04a.css.map",
+  "main.js": "static/js/main.c706d00f.js",
+  "main.js.map": "static/js/main.c706d00f.js.map",
   "static/media/dragon.svg": "static/media/dragon.1f7e75f4.svg",
-  "static/media/potion-large.svg": "static/media/potion-large.0e5932ac.svg",
-  "static/media/potion-medium.svg": "static/media/potion-medium.972c1989.svg",
-  "static/media/potion-small.svg": "static/media/potion-small.d3e227b4.svg",
+  "static/media/potion.svg": "static/media/potion.0e5932ac.svg",
   "static/media/shield.svg": "static/media/shield.38cbb988.svg"
 }
