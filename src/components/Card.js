@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Card.css';
-import dragon from '../images/dragon.svg';
-import potion from '../images/potion.svg';
-import shield from '../images/shield.svg';
 
 class Card extends Component {
   static propTypes = {
     suit: PropTypes.string.isRequired,
-    number: PropTypes.number.isRequired
+    number: PropTypes.number.isRequired,
+    centerPip: PropTypes.string.isRequired
   };
 
   suitColor() {
@@ -145,16 +143,6 @@ class Card extends Component {
     }
     return pips;
   }
-  centerPip = (dragon, potion, shield) => {
-    switch (this.props.suit) {
-      case 'hearts':
-        return potion;
-      case 'diamonds':
-        return shield;
-      default:
-        return dragon;
-    }
-  }
 
   cardLabel = () => {
     switch (this.props.suit) {
@@ -169,10 +157,11 @@ class Card extends Component {
 
   render() {
     var divStyle = {
-      backgroundImage: 'url(' + this.centerPip(dragon, potion, shield) + ')'
+      backgroundImage: 'url(' + this.props.centerPip + ')'
     };
     return (
       <div className={'card ' + this.suitColor()} onClick={this.props.onClick}>
+        {this.props.hasShieldRank && <p className="card-rank">rank: <span className="text-black">{this.props.shieldRank}</span></p>}
         <div className="corner top left">
           <h1>{((this.props.suit === 'clubs' || this.props.suit === 'spades' || this.props.suit === 'jack' || this.props.suit === 'joker') ? '-' : '') + this.props.number}</h1>
           <div className={'pip ' + this.props.suit}><p></p></div>

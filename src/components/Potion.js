@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Card from './Card';
+import IconPotion from '../images/potion.svg';
 
 class Potion extends Component {
   static propTypes = {
@@ -24,7 +25,9 @@ class Potion extends Component {
 
   render() {
     return (
-      <Card suit={this.props.suit}
+      <Card {...this.props}
+            centerPip={IconPotion}
+            suit={this.props.suit}
             number={this.props.number}
             onClick={this.onClick} />
     );

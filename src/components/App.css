@@ -90,7 +90,7 @@ body {
 .button{
   background:transparent;
   transition:all .5s ease;
-  color:#777;
+  color:#fff;
   outline:none;
   box-shadow: 20px 38px 34px -26px hsla(0,0%,0%,.2);
   border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
@@ -111,3 +111,17 @@ body {
   color: #777;
   background-color: transparent;
 }
+
+.text-white {color: #fff;}
+
+.text-black {color: #000;}
+
+.img-responsive {
+  display: block;
+  margin: auto;
+  max-width: 100%;
+}
+
+.mb3 {margin-bottom: 60px}
+
+.knot {width: 150px;}

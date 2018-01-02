@@ -1,7 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import classnames from 'classnames';
 import Room from './Room';
 import PlayerShield from './PlayerShield';
+import Knot from '../images/knot.svg';
+import Queen from '../images/queen.svg';
+import King from '../images/king.svg';
+import Ace from '../images/ace.svg';
 import './App.css';
 
 const decks = {
@@ -33,7 +37,8 @@ class App extends Component {
     retreat: false,
     isRoomComplete: false,
     modal: false,
-    gameState: ''
+    gameState: '',
+    gameVariant: ''
   }
 
   shuffle = (currentDungeon, currentRoom) => {
@@ -85,6 +90,14 @@ class App extends Component {
   }
 
   resetDungeon = (deck, type) => {
+    let gameDesc;
+    if (type === 'nohearts') {
+      gameDesc = 'Heal 3 after each room'
+    } else if (type === 'noshields') {
+      gameDesc = 'Unbreakable shield'
+    } else if (type === 'potions') {
+      gameDesc = 'No potion limit'
+    }
     this.shuffle(deck, []);
     this.setState({
       dungeonSize: deck.length,
@@ -96,6 +109,7 @@ class App extends Component {
       shield: (type === 'noshields') ? 7 : 0,
       shieldRank: 0,
       retreat: (type === 'noshields') ? false : true,
+      gameVariant: gameDesc
     });
   }
 
@@ -120,30 +134,66 @@ class App extends Component {
 
   renderRoom = () => {
     if (this.state.hp > 0 && this.state.room.length > 0) {
-      return (<Room {...this.state} gainXP={this.gainXP} updatePlayer={this.updatePlayer} handleClick={this.handleClick} />);
+      return (
+        <Fragment>
+          {this.state.gameVariant}
+          <div className="progress-bar">
+            <span className="progress-bar-rating" style={{width: ((this.state.dungeonSize - this.state.progress) / this.state.dungeonSize * 100) + '%'}}>{(Math.ceil((48 - this.state.progress) / 48 * 100)) + '% Complete'}</span>
+          </div>
+          Progress: {this.state.progress}
+          { this.state.progress > 0 &&
+            <p className="App-intro">
+              <button className="button lined thin" onClick={this.nextRoom} disabled={!this.state.isRoomComplete}>Next Room</button>
+              <button className="button lined thin" onClick={this.run} disabled={!this.state.retreat }>Run</button>
+            </p>
+          }
+          <div className="App-stats">
+            <p className="text-white">HP: {this.state.hp} • Shield: {this.state.shield}/{this.state.shieldRank}</p>
+            <small>XP: {this.state.xp} • Potions sickness: {this.state.potionDrank && '1'}</small>
+          </div>
+          <div className="App-room is-clearfix">
+            <Room {...this.state} gainXP={this.gainXP} updatePlayer={this.updatePlayer} handleClick={this.handleClick} />
+          </div>
+        </Fragment>
+      );
     } else {
       return (
         <div>
-          <p>{this.state.gameState}</p>
+          <h1 className="is-size-3">{this.state.gameState}</h1>
+          <br />
           <p><button className="button lined thin" onClick={this.toggleModal}>How To Play</button></p>
-          <p>
+          <img src={Knot} className='knot' />
+          <p className="mb3">
             <button className="button lined thin" onClick={() => this.resetDungeon(decks.standard)}>Standard Dungeon</button>
           </p>
 
-          <button className="button lined thin" onClick={() => this.resetDungeon(decks.standard, 'potions')}>Play As Queen of Hearts</button>
-          <p>
-            There is no limit to how many potions you can use in a room. However, you still cannot have more than 21 HP.
-          </p>
+          <div className="container">
+            <div className="columns">
+              <div className="column">
+                <img src={Queen} width="150" className='img-responsive' />
+                <button className="button lined thin" onClick={() => this.resetDungeon(decks.standard, 'potions')}>Play As Queen of Hearts</button>
+                <p>
+                  There is no limit to how many potions you can use in a room. However, you still cannot have more than 21 HP.
+                </p>
+              </div>
 
-          <button className="button lined thin" onClick={() => this.resetDungeon(decks.noshields, 'noshields')}>Play As King of Hearts</button>
-          <p>
-            You start with a shield. Your shield does not have a rank and cannot break. Unfortunately, you cannot run from a room.
-          </p>
+              <div className="column">
+                <img src={King} width="150" className='img-responsive' />
+                <button className="button lined thin" onClick={() => this.resetDungeon(decks.noshields, 'noshields')}>Play As King of Hearts</button>
+                <p>
+                  You start with a shield. Your shield does not have a rank and cannot break. Unfortunately, you cannot run from a room.
+                </p>
+              </div>
 
-          <button className="button lined thin" onClick={() => this.resetDungeon(decks.nohearts, 'nohearts')}>Play As Ace of Hearts</button>
-          <p>
-            After every room you heal 3 points, but potions have been removed.
-          </p>
+              <div className="column">
+                <img src={Ace} width="150" className='img-responsive' />
+                <button className="button lined thin" onClick={() => this.resetDungeon(decks.nohearts, 'nohearts')}>Play As Ace of Hearts</button>
+                <p>
+                  After every room you heal 3 points, but potions have been removed.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       );
     }
@@ -165,24 +215,12 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App mb3">
         <header className="App-header">
           <h1 className="App-title">rapscallion</h1>
         </header>
-        <div className="progress-bar">
-          <span className="progress-bar-rating" style={{width: ((this.state.dungeonSize - this.state.progress) / this.state.dungeonSize * 100) + '%'}}>{(Math.ceil((48 - this.state.progress) / 48 * 100)) + '% Complete'}</span>
-        </div>
-        { this.state.progress > 0 &&
-          <p className="App-intro">
-            <button className="button lined thin" onClick={this.nextRoom} disabled={!this.state.isRoomComplete}>Next Room</button>
-            <button className="button lined thin" onClick={this.run} disabled={!this.state.retreat }>Run</button>
-          </p>
-        }
-        <p>HP: {this.state.hp} Shield: {this.state.shield}/{this.state.shieldRank} XP: {this.state.xp} Progress: {this.state.progress} Potions drank: {this.state.potionDrank && '1'}</p>
 
-        <div className="App-room is-clearfix">
-          {this.renderRoom()}
-        </div>
+        {this.renderRoom()}
 
         {this.renderShield()}
 
