@@ -1,55 +1,33 @@
 @import url(https://fonts.googleapis.com/css?family=Lora:400,700);
+@import url(https://fonts.googleapis.com/css?family=Princess+Sofia|Roboto+Condensed);
 @import url(https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css);
+
+html,
+body {
+  background-color: #152624;
+  height: 100%;
+  font-family: 'Roboto Condensed', sans-serif;
+  color: #777;
+}
 
 .App {
   text-align: center;
 }
 
 .App-header {
-  background-color: #222;
+  background-color: #152624;
   padding: 20px;
-  color: white;
-}
-@keyframes animate-width {
-  0% {
-    width: 0;
-  }
-  100% {
-    visibility: visible;
-  }
-}
-.progress-bar {
-  background-color: #2a2b2f;
-  box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.6);
-  margin: 0;
-}
-
-.progress-bar-rating {
-  position: relative;
-  border-radius: 4px;
-  display: inline-block;
-  width: 0;
-  height: 10px;
-  font-size: 10px;
-  text-indent: -999em;
-  overflow: hidden;
-  line-height: 10px;
-  color: white;
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: bold;
-  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-  background-image: linear-gradient(to bottom, #ff4500 0%, #ff4500 47%, crimson 50%, crimson 100%);
-  width: 0;
-  transition: all 0.25s cubic-bezier(0.26, 0.01, 0.51, 1);
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 2em;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .09);
 }
 
 .App-intro {
   font-size: large;
+  margin-bottom: 10px;
 }
 
 .App-room {
@@ -68,8 +46,82 @@
   justify-content: center;
   margin-top: -75px;
 }
+@media (max-width: 576px) {
+  .App-shield { margin-top: -150px; }
+}
 .App-shield .card {
-  box-shadow: 0 0 0 10px rgba(72, 147, 154, .1), 0 10px 30px rgba(72, 147, 154, 0.5), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 10px rgba(67, 170, 139, .1), 0 10px 30px rgba(67, 170, 139, 0.5), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
   width: 180px;
   height: 230px;
 }
+
+@keyframes animate-width {
+  0% {
+    width: 0;
+  }
+  100% {
+    visibility: visible;
+  }
+}
+.progress-bar {
+  margin: 0 0 10px;
+}
+
+.progress-bar-rating {
+  position: relative;
+  border-radius: 4px;
+  display: inline-block;
+  width: 0;
+  height: 10px;
+  font-size: 10px;
+  text-indent: -999em;
+  overflow: hidden;
+  line-height: 10px;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  background-image: linear-gradient(to bottom, #F15471 0%, #F15471 47%, #ED143D 50%, #ED143D 100%);
+  width: 0;
+  transition: all 0.25s cubic-bezier(0.26, 0.01, 0.51, 1);
+}
+
+.button{
+  background:transparent;
+  transition:all .5s ease;
+  color:#fff;
+  outline:none;
+  box-shadow: 20px 38px 34px -26px hsla(0,0%,0%,.2);
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+.button:hover{
+  color: #ddd;
+  box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
+}
+
+.button.lined.thin{
+  border:solid 2px #777;
+}
+
+.button[disabled] {
+  background-color: transparent;
+}
+.button[disabled]:hover {
+  color: #777;
+  background-color: transparent;
+}
+
+.text-white {color: #fff;}
+
+.text-black {color: #000;}
+
+.img-responsive {
+  display: block;
+  margin: auto;
+  max-width: 100%;
+}
+
+.mb3 {margin-bottom: 60px}
+
+.knot {width: 150px;}

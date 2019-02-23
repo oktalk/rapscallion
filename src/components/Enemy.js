@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Card from './Card';
+import IconDragon from '../images/dragon.svg';
 
 class Enemy extends Component {
   static propTypes = {
@@ -28,7 +29,7 @@ class Enemy extends Component {
     }
 
     if (this.props.shield > 0 && this.props.shieldRank === 0) {
-      setShieldRank = this.props.number;
+      setShieldRank = (this.props.breakableShield) ? this.props.number : 0;
     } else if (this.props.shieldRank >= this.props.number) {
       setShieldRank = this.props.number;
     } else {
@@ -48,7 +49,9 @@ class Enemy extends Component {
 
   render() {
     return (
-      <Card suit={this.props.suit}
+      <Card {...this.props}
+            centerPip={IconDragon}
+            suit={this.props.suit}
             number={this.props.number}
             onClick={this.onClick} />
     );
