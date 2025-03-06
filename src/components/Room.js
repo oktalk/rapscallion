@@ -10,48 +10,57 @@ class Room extends Component {
     hp: PropTypes.number.isRequired,
     potionDrank: PropTypes.bool.isRequired,
     potionLimit: PropTypes.bool.isRequired,
-    breakableShield:  PropTypes.bool.isRequired,
+    breakableShield: PropTypes.bool.isRequired,
     updatePlayer: PropTypes.func.isRequired,
     handleClick: PropTypes.func.isRequired,
     shield: PropTypes.number.isRequired,
     shieldRank: PropTypes.number.isRequired
   };
 
+  renderCard = (card) => {
+    const commonProps = {
+      ...card,
+      hp: this.props.hp,
+      updatePlayer: this.props.updatePlayer,
+      handleClick: this.props.handleClick
+    };
+
+    switch (card.suit) {
+      case 'hearts':
+        return (
+          <Potion
+            {...commonProps}
+            key={`${card.suit}${card.number}`}
+            potionLimit={this.props.potionLimit}
+            potionDrank={this.props.potionDrank}
+          />
+        );
+      case 'diamonds':
+        return (
+          <Shield
+            {...commonProps}
+            key={`${card.suit}${card.number}`}
+            potionDrank={this.props.potionDrank}
+          />
+        );
+      default:
+        return (
+          <Enemy
+            {...commonProps}
+            key={`${card.suit}${card.number}`}
+            xp={this.props.xp}
+            shield={this.props.shield}
+            shieldRank={this.props.shieldRank}
+            breakableShield={this.props.breakableShield}
+          />
+        );
+    }
+  };
+
   render() {
     return (
       <Fragment>
-        {this.props.room.map((card) => {
-          switch (card.suit) {
-            case 'hearts':
-              return (<Potion
-                {...card}
-                key={card.suit + card.number}
-                hp={this.props.hp}
-                potionLimit={this.props.potionLimit}
-                potionDrank={this.props.potionDrank}
-                updatePlayer={this.props.updatePlayer}
-                handleClick={this.props.handleClick} />);
-            case 'diamonds':
-              return (<Shield
-                {...card}
-                key={card.suit + card.number}
-                hp={this.props.hp}
-                potionDrank={this.props.potionDrank}
-                updatePlayer={this.props.updatePlayer}
-                handleClick={this.props.handleClick} />);
-            default:
-              return (<Enemy
-                {...card}
-                xp={this.props.xp}
-                shield={this.props.shield}
-                shieldRank={this.props.shieldRank}
-                key={card.suit + card.number}
-                hp={this.props.hp}
-                breakableShield={this.props.breakableShield}
-                updatePlayer={this.props.updatePlayer}
-                handleClick={this.props.handleClick} />);
-          }
-        })}
+        {this.props.room.map(this.renderCard)}
       </Fragment>
     );
   }

@@ -1,33 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Card from './Card';
 import IconShield from '../images/shield.svg';
 
-class Shield extends Component {
-  static propTypes = {
-    potionDrank: PropTypes.bool.isRequired,
-    hp: PropTypes.number.isRequired,
-    number: PropTypes.number.isRequired,
-    updatePlayer: PropTypes.func.isRequired,
-    handleClick: PropTypes.func.isRequired,
-    suit: PropTypes.string.isRequired
+const Shield = ({ potionDrank, hp, number, updatePlayer, handleClick, suit }) => {
+  const onClick = () => {
+    const effect = (number < 11) ? number : 11;
+    updatePlayer({ shield: effect, shieldRank: 0 });
+    handleClick({ suit, number });
   };
 
-  onClick = () => {
-    const effect = (this.props.number < 11) ? this.props.number : 11;
-    this.props.updatePlayer({ shield: effect, shieldRank: 0 });
-    this.props.handleClick({ suit: this.props.suit, number: this.props.number });
-  }
+  return (
+    <Card
+      potionDrank={potionDrank}
+      hp={hp}
+      centerPip={IconShield}
+      suit={suit}
+      number={number}
+      onClick={onClick}
+    />
+  );
+};
 
-  render() {
-    return (
-      <Card {...this.props}
-            centerPip={IconShield}
-            suit={this.props.suit}
-            number={this.props.number}
-            onClick={this.onClick} />
-    );
-  }
-}
+Shield.propTypes = {
+  potionDrank: PropTypes.bool.isRequired,
+  hp: PropTypes.number.isRequired,
+  number: PropTypes.number.isRequired,
+  updatePlayer: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired,
+  suit: PropTypes.string.isRequired
+};
 
 export default Shield;

@@ -1,37 +1,35 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Card from './Card';
 import IconPotion from '../images/potion.svg';
 
-class Potion extends Component {
-  static propTypes = {
-    potionDrank: PropTypes.bool.isRequired,
-    hp: PropTypes.number.isRequired,
-    number: PropTypes.number.isRequired,
-    updatePlayer: PropTypes.func.isRequired,
-    handleClick: PropTypes.func.isRequired,
-    suit: PropTypes.string.isRequired
+const Potion = ({ potionDrank, hp, number, updatePlayer, handleClick, suit }) => {
+  const onClick = () => {
+    if (!potionDrank) {
+      const maxHeal = number < 11 ? number : 11;
+      const effect = Math.min(hp + maxHeal, 21);
+      updatePlayer({ hp: effect, potionDrank: true });
+    }
+    handleClick({ suit, number });
   };
 
-  onClick = () => {
-    if (!this.props.potionDrank) {
-      const maxHeal = (this.props.number < 11) ? this.props.number : 11;
-      let effect = this.props.hp + maxHeal;
-      effect = (effect > 21) ? 21 : effect;
-      this.props.updatePlayer({hp: effect, potionDrank: (this.props.potionLimit)});
-    }
-    this.props.handleClick({ suit: this.props.suit, number: this.props.number });
-  }
+  return (
+    <Card
+      centerPip={IconPotion}
+      suit={suit}
+      number={number}
+      onClick={onClick}
+    />
+  );
+};
 
-  render() {
-    return (
-      <Card {...this.props}
-            centerPip={IconPotion}
-            suit={this.props.suit}
-            number={this.props.number}
-            onClick={this.onClick} />
-    );
-  }
-}
+Potion.propTypes = {
+  potionDrank: PropTypes.bool.isRequired,
+  hp: PropTypes.number.isRequired,
+  number: PropTypes.number.isRequired,
+  updatePlayer: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired,
+  suit: PropTypes.string.isRequired,
+};
 
 export default Potion;

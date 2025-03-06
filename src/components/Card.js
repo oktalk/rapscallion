@@ -6,167 +6,131 @@ class Card extends Component {
   static propTypes = {
     suit: PropTypes.string.isRequired,
     number: PropTypes.number.isRequired,
-    centerPip: PropTypes.string.isRequired
+    centerPip: PropTypes.string.isRequired,
+    onClick: PropTypes.func,
+    hasShieldRank: PropTypes.bool,
+    shieldRank: PropTypes.number
   };
 
-  suitColor() {
-    switch (this.props.suit) {
-      case 'hearts':
-        return 'red';
-      case 'diamonds':
-        return 'red';
-      default:
-        return 'black';
-    }
-  }
+  suitColor = () => {
+    const { suit } = this.props;
+    return suit === 'hearts' || suit === 'diamonds' ? 'red' : 'black';
+  };
 
-  centerPipsStyle() {
-    switch (this.props.number) {
-      case 14:
-        return [
-          { left: '50%', top: '50%' }
-        ];
-      case 2:
-        return [
-          { left: '50%', top: '20%' },
-          { left: '50%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' }
-        ];
-      case 3:
-        return [
-          { left: '50%', top: '50%' },
-          { left: '50%', top: '20%' },
-          { left: '50%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' }
-        ];
-      case 4:
-        return [
-          { left: '33%', top: '20%' },
-          { left: '33%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' },
-          { left: '67%', top: '20%' },
-          { left: '67%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' }
-        ];
-      case 5:
-        return [
-          { left: '50%', top: '50%' },
-          { left: '33%', top: '20%' },
-          { left: '33%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' },
-          { left: '67%', top: '20%' },
-          { left: '67%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' }
-        ];
-      case 6:
-        return [
-          { left: '33%', top: '50%' },
-          { left: '33%', top: '20%' },
-          { left: '33%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' },
-          { left: '67%', top: '50%' },
-          { left: '67%', top: '20%' },
-          { left: '67%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' }
-        ];
-      case 7:
-        return [
-          { left: '33%', top: '50%' },
-          { left: '33%', top: '20%' },
-          { left: '33%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' },
-          { left: '67%', top: '50%' },
-          { left: '67%', top: '20%' },
-          { left: '67%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' },
-          { left: '50%', top: '35%' }
-        ];
-      case 8:
-        return [
-          { left: '33%', top: '20%' },
-          { left: '33%', top: '40%' },
-          { left: '33%', top: '60%', transform: 'translate(-50%, -50%) rotate(180deg)' },
-          { left: '33%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' },
-          { left: '67%', top: '20%' },
-          { left: '67%', top: '40%' },
-          { left: '67%', top: '60%', transform: 'translate(-50%, -50%) rotate(180deg)' },
-          { left: '67%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' }
-        ];
-      case 9:
-        return [
-          { left: '50%', top: '50%' },
-          { left: '33%', top: '20%' },
-          { left: '33%', top: '40%' },
-          { left: '33%', top: '60%', transform: 'translate(-50%, -50%) rotate(180deg)' },
-          { left: '33%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' },
-          { left: '67%', top: '20%' },
-          { left: '67%', top: '40%' },
-          { left: '67%', top: '60%', transform: 'translate(-50%, -50%) rotate(180deg)' },
-          { left: '67%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' }
-        ];
-      case 10:
-        return [
-          { left: '50%', top: '35%' },
-          { left: '50%', top: '65%', transform: 'translate(-50%, -50%) rotate(180deg)' },
-          { left: '33%', top: '20%' },
-          { left: '33%', top: '40%' },
-          { left: '33%', top: '60%', transform: 'translate(-50%, -50%) rotate(180deg)' },
-          { left: '33%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' },
-          { left: '67%', top: '20%' },
-          { left: '67%', top: '40%' },
-          { left: '67%', top: '60%', transform: 'translate(-50%, -50%) rotate(180deg)' },
-          { left: '67%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' }
-        ];
-      default:
-        return [];
-    }
-  }
+  centerPipsStyle = () => {
+    const { number } = this.props;
+    const styles = {
+      14: [{ left: '50%', top: '50%' }],
+      2: [
+        { left: '50%', top: '20%' },
+        { left: '50%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' }
+      ],
+      3: [
+        { left: '50%', top: '50%' },
+        { left: '50%', top: '20%' },
+        { left: '50%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' }
+      ],
+      4: [
+        { left: '33%', top: '20%' },
+        { left: '33%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' },
+        { left: '67%', top: '20%' },
+        { left: '67%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' }
+      ],
+      5: [
+        { left: '50%', top: '50%' },
+        { left: '33%', top: '20%' },
+        { left: '33%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' },
+        { left: '67%', top: '20%' },
+        { left: '67%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' }
+      ],
+      6: [
+        { left: '33%', top: '50%' },
+        { left: '33%', top: '20%' },
+        { left: '33%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' },
+        { left: '67%', top: '50%' },
+        { left: '67%', top: '20%' },
+        { left: '67%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' }
+      ],
+      7: [
+        { left: '33%', top: '50%' },
+        { left: '33%', top: '20%' },
+        { left: '33%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' },
+        { left: '67%', top: '50%' },
+        { left: '67%', top: '20%' },
+        { left: '67%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' },
+        { left: '50%', top: '35%' }
+      ],
+      8: [
+        { left: '33%', top: '20%' },
+        { left: '33%', top: '40%' },
+        { left: '33%', top: '60%', transform: 'translate(-50%, -50%) rotate(180deg)' },
+        { left: '33%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' },
+        { left: '67%', top: '20%' },
+        { left: '67%', top: '40%' },
+        { left: '67%', top: '60%', transform: 'translate(-50%, -50%) rotate(180deg)' },
+        { left: '67%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' }
+      ],
+      9: [
+        { left: '50%', top: '50%' },
+        { left: '33%', top: '20%' },
+        { left: '33%', top: '40%' },
+        { left: '33%', top: '60%', transform: 'translate(-50%, -50%) rotate(180deg)' },
+        { left: '33%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' },
+        { left: '67%', top: '20%' },
+        { left: '67%', top: '40%' },
+        { left: '67%', top: '60%', transform: 'translate(-50%, -50%) rotate(180deg)' },
+        { left: '67%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' }
+      ],
+      10: [
+        { left: '50%', top: '35%' },
+        { left: '50%', top: '65%', transform: 'translate(-50%, -50%) rotate(180deg)' },
+        { left: '33%', top: '20%' },
+        { left: '33%', top: '40%' },
+        { left: '33%', top: '60%', transform: 'translate(-50%, -50%) rotate(180deg)' },
+        { left: '33%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' },
+        { left: '67%', top: '20%' },
+        { left: '67%', top: '40%' },
+        { left: '67%', top: '60%', transform: 'translate(-50%, -50%) rotate(180deg)' },
+        { left: '67%', top: '80%', transform: 'translate(-50%, -50%) rotate(180deg)' }
+      ]
+    };
+    return styles[number] || [];
+  };
 
-
-  face(number) {
-    switch (number) {
-      case 11:
-        return 'J';
-      case 12:
-        return 'Q';
-      case 13:
-        return 'K';
-      case 14:
-        return 'A';
-      case 21:
-        return 'I';
-      default:
-        return number;
-    }
-  }
+  face = (number) => {
+    const faces = { 11: 'J', 12: 'Q', 13: 'K', 14: 'A', 21: 'I' };
+    return faces[number] || number;
+  };
 
   renderCenterPips = () => {
+    const { suit, number } = this.props;
     const faceCards = [11, 12, 13, 14, 21];
-    let pips = [];
-    if (faceCards.includes(this.props.number)) {
-      pips = <h1 key={this.props.suit + this.props.number}>{this.face(this.props.number)}</h1>;
+    if (faceCards.includes(number)) {
+      return <h1 key={suit + number}>{this.face(number)}</h1>;
     } else {
-      const pipStyle = this.centerPipsStyle();
-      for (let i = 0; i < this.props.number; i++) {
-        pips.push(<div key={this.props.suit + this.props.number + i} className={'pip ' + this.props.suit} style={pipStyle[i]}></div>);
-      }
+      return this.centerPipsStyle().map((style, i) => (
+        <div key={suit + number + i} className={`pip ${suit}`} style={style}></div>
+      ));
     }
-    return pips;
-  }
+  };
 
   cardLabel = () => {
-    switch (this.props.suit) {
-      case 'hearts':
-        return 'Potion';
-      case 'diamonds':
-        return 'Shield';
-      default:
-        return 'Demon';
-    }
-  }
+    const { suit } = this.props;
+    const labels = { hearts: 'Potion', diamonds: 'Shield' };
+    return labels[suit] || 'Demon';
+  };
 
   render() {
-    var divStyle = {
-      backgroundImage: 'url(' + this.props.centerPip + ')'
-    };
+    const { suit, number, centerPip, onClick, hasShieldRank, shieldRank } = this.props;
+    const divStyle = { backgroundImage: `url(${centerPip})` };
     return (
-      <div className={'card ' + this.suitColor()} onClick={this.props.onClick}>
-        {this.props.hasShieldRank && <p className="card-rank">rank: <span className="text-black">{this.props.shieldRank}</span></p>}
+      <div className={`card ${this.suitColor()}`} onClick={onClick}>
+        {hasShieldRank && <p className="card-rank">rank: <span className="text-black">{shieldRank}</span></p>}
         <div className="corner top left">
-          <h1>{((this.props.suit === 'clubs' || this.props.suit === 'spades' || this.props.suit === 'jack' || this.props.suit === 'joker') ? '-' : '') + this.props.number}</h1>
-          <div className={'pip ' + this.props.suit}><p></p></div>
+          <h1>{['clubs', 'spades', 'jack', 'joker'].includes(suit) ? '-' : ''}{number}</h1>
+          <div className={`pip ${suit}`}><p></p></div>
         </div>
-        <div className="pips center-pip" style={divStyle} />
+        <div role="img" className="pips center-pip" style={divStyle} />
         <div className="card-label">{this.cardLabel()}</div>
       </div>
     );

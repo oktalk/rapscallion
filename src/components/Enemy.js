@@ -12,47 +12,56 @@ class Enemy extends Component {
     handleClick: PropTypes.func.isRequired,
     shield: PropTypes.number.isRequired,
     shieldRank: PropTypes.number.isRequired,
-    suit: PropTypes.string.isRequired
+    suit: PropTypes.string.isRequired,
+    breakableShield: PropTypes.bool
+  };
+
+  calculateEffect = () => {
+    const { hp, number, shield } = this.props;
+    if (shield === 0) {
+      return hp - number;
+    } else if (shield < number) {
+      return hp - (number - shield);
+    }
+    return hp;
+  };
+
+  calculateShieldRank = () => {
+    const { shield, shieldRank, number, breakableShield } = this.props;
+    if (shield > 0 && shieldRank === 0) {
+      return breakableShield ? number : 0;
+    } else if (shieldRank >= number) {
+      return number;
+    }
+    return 0;
   };
 
   onClick = () => {
-    let effect = this.props.hp;
-    let setShield = this.props.shield;
-    let setShieldRank = this.props.shieldRank;
-    let setXP = this.props.xp + this.props.number;
+    const { xp, number, shield, updatePlayer, handleClick, suit } = this.props;
+    let effect = this.calculateEffect();
+    let setShield = shield;
+    let setShieldRank = this.calculateShieldRank();
+    let setXP = xp + number;
     let setGameState = '';
 
-    if(this.props.shield === 0) {
-      effect = this.props.hp - this.props.number;
-    } else if (this.props.shield < this.props.number) {
-      effect = this.props.hp - (Math.abs( this.props.shield - this.props.number ));
-    }
-
-    if (this.props.shield > 0 && this.props.shieldRank === 0) {
-      setShieldRank = (this.props.breakableShield) ? this.props.number : 0;
-    } else if (this.props.shieldRank >= this.props.number) {
-      setShieldRank = this.props.number;
-    } else {
-      setShield = 0;
-      setShieldRank = 0;
-    }
     if (effect < 0) {
       setGameState = 'Game over';
       setShield = 0;
       setShieldRank = 0;
-      setXP = this.props.xp
+      setXP = xp;
     }
 
-    this.props.updatePlayer({ hp: effect, shield: setShield, shieldRank: setShieldRank, xp: setXP, gameState: setGameState });
-    this.props.handleClick({ suit: this.props.suit, number: this.props.number });
-  }
+    updatePlayer({ hp: effect, shield: setShield, shieldRank: setShieldRank, xp: setXP, gameState: setGameState });
+    handleClick({ suit, number });
+  };
 
   render() {
+    const { suit, number } = this.props;
     return (
       <Card {...this.props}
             centerPip={IconDragon}
-            suit={this.props.suit}
-            number={this.props.number}
+            suit={suit}
+            number={number}
             onClick={this.onClick} />
     );
   }

@@ -9,16 +9,16 @@ import Ace from '../images/ace.svg';
 import './App.css';
 
 const decks = {
-    standard: [
-      {suit: 'joker', number: 21},{suit: 'jack', number: 21},{suit: 'spades', number: 2},{suit: 'spades', number: 3},{suit: 'spades', number: 4},{suit: 'spades', number: 5},{suit: 'spades', number: 6},{suit: 'spades', number: 7},{suit: 'spades', number: 8},{suit: 'spades', number: 9},{suit: 'spades', number: 10},{suit: 'spades', number: 11},{suit: 'spades', number: 12},{suit: 'spades', number: 13},{suit: 'spades', number: 14},{suit: 'hearts', number: 2},{suit: 'hearts', number: 3},{suit: 'hearts', number: 4},{suit: 'hearts', number: 5},{suit: 'hearts', number: 6},{suit: 'hearts', number: 7},{suit: 'hearts', number: 8},{suit: 'hearts', number: 9},{suit: 'hearts', number: 10},{suit: 'hearts', number: 11},{suit: 'diamonds', number: 2},{suit: 'diamonds', number: 3},{suit: 'diamonds', number: 4},{suit: 'diamonds', number: 5},{suit: 'diamonds', number: 6},{suit: 'diamonds', number: 7},{suit: 'diamonds', number: 8},{suit: 'diamonds', number: 9},{suit: 'diamonds', number: 10},{suit: 'diamonds', number: 11},{suit: 'clubs', number: 2},{suit: 'clubs', number: 3},{suit: 'clubs', number: 4},{suit: 'clubs', number: 5},{suit: 'clubs', number: 6},{suit: 'clubs', number: 7},{suit: 'clubs', number: 8},{suit: 'clubs', number: 9},{suit: 'clubs', number: 10},{suit: 'clubs', number: 11},{suit: 'clubs', number: 12},{suit: 'clubs', number: 13},{suit: 'clubs', number: 14}
-    ],
-    nohearts: [
-      {suit: 'joker', number: 21},{suit: 'jack', number: 21},{suit: 'spades', number: 2},{suit: 'spades', number: 3},{suit: 'spades', number: 4},{suit: 'spades', number: 5},{suit: 'spades', number: 6},{suit: 'spades', number: 7},{suit: 'spades', number: 8},{suit: 'spades', number: 9},{suit: 'spades', number: 10},{suit: 'spades', number: 11},{suit: 'spades', number: 12},{suit: 'spades', number: 13},{suit: 'spades', number: 14},{suit: 'diamonds', number: 2},{suit: 'diamonds', number: 3},{suit: 'diamonds', number: 4},{suit: 'diamonds', number: 5},{suit: 'diamonds', number: 6},{suit: 'diamonds', number: 7},{suit: 'diamonds', number: 8},{suit: 'diamonds', number: 9},{suit: 'diamonds', number: 10},{suit: 'diamonds', number: 11},{suit: 'clubs', number: 2},{suit: 'clubs', number: 3},{suit: 'clubs', number: 4},{suit: 'clubs', number: 5},{suit: 'clubs', number: 6},{suit: 'clubs', number: 7},{suit: 'clubs', number: 8},{suit: 'clubs', number: 9},{suit: 'clubs', number: 10},{suit: 'clubs', number: 11},{suit: 'clubs', number: 12},{suit: 'clubs', number: 13},{suit: 'clubs', number: 14}
-    ],
-    noshields: [
-      {suit: 'joker', number: 21},{suit: 'jack', number: 21},{suit: 'spades', number: 2},{suit: 'spades', number: 3},{suit: 'spades', number: 4},{suit: 'spades', number: 5},{suit: 'spades', number: 6},{suit: 'spades', number: 7},{suit: 'spades', number: 8},{suit: 'spades', number: 9},{suit: 'spades', number: 10},{suit: 'spades', number: 11},{suit: 'spades', number: 12},{suit: 'spades', number: 13},{suit: 'spades', number: 14},{suit: 'hearts', number: 2},{suit: 'hearts', number: 3},{suit: 'hearts', number: 4},{suit: 'hearts', number: 5},{suit: 'hearts', number: 6},{suit: 'hearts', number: 7},{suit: 'hearts', number: 8},{suit: 'hearts', number: 9},{suit: 'hearts', number: 10},{suit: 'hearts', number: 11},{suit: 'clubs', number: 2},{suit: 'clubs', number: 3},{suit: 'clubs', number: 4},{suit: 'clubs', number: 5},{suit: 'clubs', number: 6},{suit: 'clubs', number: 7},{suit: 'clubs', number: 8},{suit: 'clubs', number: 9},{suit: 'clubs', number: 10},{suit: 'clubs', number: 11},{suit: 'clubs', number: 12},{suit: 'clubs', number: 13},{suit: 'clubs', number: 14}
-    ]
-  };
+  standard: [
+    { suit: 'joker', number: 21 }, { suit: 'jack', number: 21 }, { suit: 'spades', number: 2 }, { suit: 'spades', number: 3 }, { suit: 'spades', number: 4 }, { suit: 'spades', number: 5 }, { suit: 'spades', number: 6 }, { suit: 'spades', number: 7 }, { suit: 'spades', number: 8 }, { suit: 'spades', number: 9 }, { suit: 'spades', number: 10 }, { suit: 'spades', number: 11 }, { suit: 'spades', number: 12 }, { suit: 'spades', number: 13 }, { suit: 'spades', number: 14 }, { suit: 'hearts', number: 2 }, { suit: 'hearts', number: 3 }, { suit: 'hearts', number: 4 }, { suit: 'hearts', number: 5 }, { suit: 'hearts', number: 6 }, { suit: 'hearts', number: 7 }, { suit: 'hearts', number: 8 }, { suit: 'hearts', number: 9 }, { suit: 'hearts', number: 10 }, { suit: 'hearts', number: 11 }, { suit: 'diamonds', number: 2 }, { suit: 'diamonds', number: 3 }, { suit: 'diamonds', number: 4 }, { suit: 'diamonds', number: 5 }, { suit: 'diamonds', number: 6 }, { suit: 'diamonds', number: 7 }, { suit: 'diamonds', number: 8 }, { suit: 'diamonds', number: 9 }, { suit: 'diamonds', number: 10 }, { suit: 'diamonds', number: 11 }, { suit: 'clubs', number: 2 }, { suit: 'clubs', number: 3 }, { suit: 'clubs', number: 4 }, { suit: 'clubs', number: 5 }, { suit: 'clubs', number: 6 }, { suit: 'clubs', number: 7 }, { suit: 'clubs', number: 8 }, { suit: 'clubs', number: 9 }, { suit: 'clubs', number: 10 }, { suit: 'clubs', number: 11 }, { suit: 'clubs', number: 12 }, { suit: 'clubs', number: 13 }, { suit: 'clubs', number: 14 }
+  ],
+  nohearts: [
+    { suit: 'joker', number: 21 }, { suit: 'jack', number: 21 }, { suit: 'spades', number: 2 }, { suit: 'spades', number: 3 }, { suit: 'spades', number: 4 }, { suit: 'spades', number: 5 }, { suit: 'spades', number: 6 }, { suit: 'spades', number: 7 }, { suit: 'spades', number: 8 }, { suit: 'spades', number: 9 }, { suit: 'spades', number: 10 }, { suit: 'spades', number: 11 }, { suit: 'spades', number: 12 }, { suit: 'spades', number: 13 }, { suit: 'spades', number: 14 }, { suit: 'diamonds', number: 2 }, { suit: 'diamonds', number: 3 }, { suit: 'diamonds', number: 4 }, { suit: 'diamonds', number: 5 }, { suit: 'diamonds', number: 6 }, { suit: 'diamonds', number: 7 }, { suit: 'diamonds', number: 8 }, { suit: 'diamonds', number: 9 }, { suit: 'diamonds', number: 10 }, { suit: 'diamonds', number: 11 }, { suit: 'clubs', number: 2 }, { suit: 'clubs', number: 3 }, { suit: 'clubs', number: 4 }, { suit: 'clubs', number: 5 }, { suit: 'clubs', number: 6 }, { suit: 'clubs', number: 7 }, { suit: 'clubs', number: 8 }, { suit: 'clubs', number: 9 }, { suit: 'clubs', number: 10 }, { suit: 'clubs', number: 11 }, { suit: 'clubs', number: 12 }, { suit: 'clubs', number: 13 }, { suit: 'clubs', number: 14 }
+  ],
+  noshields: [
+    { suit: 'joker', number: 21 }, { suit: 'jack', number: 21 }, { suit: 'spades', number: 2 }, { suit: 'spades', number: 3 }, { suit: 'spades', number: 4 }, { suit: 'spades', number: 5 }, { suit: 'spades', number: 6 }, { suit: 'spades', number: 7 }, { suit: 'spades', number: 8 }, { suit: 'spades', number: 9 }, { suit: 'spades', number: 10 }, { suit: 'spades', number: 11 }, { suit: 'spades', number: 12 }, { suit: 'spades', number: 13 }, { suit: 'spades', number: 14 }, { suit: 'hearts', number: 2 }, { suit: 'hearts', number: 3 }, { suit: 'hearts', number: 4 }, { suit: 'hearts', number: 5 }, { suit: 'hearts', number: 6 }, { suit: 'hearts', number: 7 }, { suit: 'hearts', number: 8 }, { suit: 'hearts', number: 9 }, { suit: 'hearts', number: 10 }, { suit: 'hearts', number: 11 }, { suit: 'clubs', number: 2 }, { suit: 'clubs', number: 3 }, { suit: 'clubs', number: 4 }, { suit: 'clubs', number: 5 }, { suit: 'clubs', number: 6 }, { suit: 'clubs', number: 7 }, { suit: 'clubs', number: 8 }, { suit: 'clubs', number: 9 }, { suit: 'clubs', number: 10 }, { suit: 'clubs', number: 11 }, { suit: 'clubs', number: 12 }, { suit: 'clubs', number: 13 }, { suit: 'clubs', number: 14 }
+  ]
+};
 
 class App extends Component {
   state = {
@@ -42,17 +42,12 @@ class App extends Component {
   }
 
   shuffle = (currentDungeon, currentRoom) => {
-    const gatherCards = currentDungeon.concat(currentRoom);
-    let counter = gatherCards.length;
-
-    while (counter > 0) {
-      let index = Math.floor(Math.random() * counter);
-      counter--;
-      let temp = gatherCards[counter];
-      gatherCards[counter] = gatherCards[index];
-      gatherCards[index] = temp;
+    const gatherCards = [...currentDungeon, ...currentRoom];
+    for (let i = gatherCards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [gatherCards[i], gatherCards[j]] = [gatherCards[j], gatherCards[i]];
     }
-    const dungeonRoom = gatherCards.splice(-4, gatherCards.length);
+    const dungeonRoom = gatherCards.splice(-4);
     this.setState(prevState => ({
       dungeon: gatherCards,
       hp: prevState.hp + this.state.regenerate,
@@ -60,12 +55,12 @@ class App extends Component {
       progress: gatherCards.length,
       potionDrank: false,
       isRoomComplete: false,
-      gameState: ((dungeonRoom.length === 0 ) ? 'You won!' : this.state.gameState)
+      gameState: dungeonRoom.length === 0 ? 'You won!' : this.state.gameState
     }));
   }
 
   deal = (dungeon) => {
-    const room = dungeon.splice(-4, dungeon.length);
+    const room = dungeon.splice(-4);
     this.setState(prevState => ({
       dungeon,
       room,
@@ -75,7 +70,7 @@ class App extends Component {
       roomComplete: false,
       retreat: true,
       isRoomComplete: false,
-      gameState: ((dungeon.length === 0 ) ? 'You won!' : '')
+      gameState: dungeon.length === 0 ? 'You won!' : ''
     }));
   }
 
@@ -86,29 +81,27 @@ class App extends Component {
 
   nextRoom = () => {
     this.shuffle(this.state.dungeon, this.state.room);
-    this.setState({ retreat: this.state.breakableShield});
+    this.setState({ retreat: this.state.breakableShield });
   }
 
   resetDungeon = (deck, type) => {
-    let gameDesc;
-    if (type === 'nohearts') {
-      gameDesc = 'Heal 3 after each room'
-    } else if (type === 'noshields') {
-      gameDesc = 'Unbreakable shield'
-    } else if (type === 'potions') {
-      gameDesc = 'No potion limit'
-    }
+    const gameDesc = {
+      nohearts: 'Heal 3 after each room',
+      noshields: 'Unbreakable shield',
+      potions: 'No potion limit'
+    }[type];
+
     this.shuffle(deck, []);
     this.setState({
       dungeonSize: deck.length,
-      regenerate: (type === 'nohearts') ? 3 : 0,
-      potionLimit: (type === 'potions') ? false : true,
-      breakableShield: (type === 'noshields') ? false : true,
+      regenerate: type === 'nohearts' ? 3 : 0,
+      potionLimit: type === 'potions' ? false : true,
+      breakableShield: type === 'noshields' ? false : true,
       hp: 21,
       xp: 0,
-      shield: (type === 'noshields') ? 7 : 0,
+      shield: type === 'noshields' ? 7 : 0,
       shieldRank: 0,
-      retreat: (type === 'noshields') ? false : true,
+      retreat: type === 'noshields' ? false : true,
       gameVariant: gameDesc
     });
   }
@@ -120,10 +113,10 @@ class App extends Component {
   }
 
   handleClick = (target) => {
-    const room = this.state.room.filter(card => {return card.suit !== target.suit || card.number !== target.number});
+    const room = this.state.room.filter(card => card.suit !== target.suit || card.number !== target.number);
     this.setState({
       room,
-      isRoomComplete: (room.length <= 1) ? true : false,
+      isRoomComplete: room.length <= 1,
       retreat: false
     }, () => {
       if (room.length === 0) {
@@ -138,13 +131,15 @@ class App extends Component {
         <Fragment>
           {this.state.gameVariant}
           <div className="progress-bar">
-            <span className="progress-bar-rating" style={{width: ((this.state.dungeonSize - this.state.progress) / this.state.dungeonSize * 100) + '%'}}>{(Math.ceil((48 - this.state.progress) / 48 * 100)) + '% Complete'}</span>
+            <span className="progress-bar-rating" style={{ width: `${(this.state.dungeonSize - this.state.progress) / this.state.dungeonSize * 100}%` }}>
+              {`${Math.ceil((48 - this.state.progress) / 48 * 100)}% Complete`}
+            </span>
           </div>
           Progress: {this.state.progress}
-          { this.state.progress > 0 &&
+          {this.state.progress > 0 &&
             <p className="App-intro">
               <button className="button lined thin" onClick={this.nextRoom} disabled={!this.state.isRoomComplete}>Next Room</button>
-              <button className="button lined thin" onClick={this.run} disabled={!this.state.retreat }>Run</button>
+              <button className="button lined thin" onClick={this.run} disabled={!this.state.retreat}>Run</button>
             </p>
           }
           <div className="App-stats">
@@ -225,7 +220,7 @@ class App extends Component {
         {this.renderShield()}
 
         {this.state.modal &&
-          <div className={classnames('modal', {'is-active' : this.state.modal})}>
+          <div className={classnames('modal', { 'is-active': this.state.modal })}>
             <div className="modal-background"></div>
             <div className="modal-card">
               <header className="modal-card-head">
