@@ -1,20 +1,22 @@
 {
-  "main.css": "/rapscallion/static/css/main.3db36631.chunk.css",
-  "main.js": "/rapscallion/static/js/main.44b4b951.chunk.js",
-  "main.js.map": "/rapscallion/static/js/main.44b4b951.chunk.js.map",
-  "runtime~main.js": "/rapscallion/static/js/runtime~main.12dbc963.js",
-  "runtime~main.js.map": "/rapscallion/static/js/runtime~main.12dbc963.js.map",
-  "static/js/2.6d84b68e.chunk.js": "/rapscallion/static/js/2.6d84b68e.chunk.js",
-  "static/js/2.6d84b68e.chunk.js.map": "/rapscallion/static/js/2.6d84b68e.chunk.js.map",
-  "index.html": "/rapscallion/index.html",
-  "precache-manifest.559bc56648a64e8b2a915f98180de003.js": "/rapscallion/precache-manifest.559bc56648a64e8b2a915f98180de003.js",
-  "service-worker.js": "/rapscallion/service-worker.js",
-  "static/css/main.3db36631.chunk.css.map": "/rapscallion/static/css/main.3db36631.chunk.css.map",
-  "static/media/ace.svg": "/rapscallion/static/media/ace.1e3ef202.svg",
-  "static/media/dragon.svg": "/rapscallion/static/media/dragon.1f7e75f4.svg",
-  "static/media/king.svg": "/rapscallion/static/media/king.c071393d.svg",
-  "static/media/knot.svg": "/rapscallion/static/media/knot.8cc3051c.svg",
-  "static/media/potion.svg": "/rapscallion/static/media/potion.0e5932ac.svg",
-  "static/media/queen.svg": "/rapscallion/static/media/queen.8d18cf80.svg",
-  "static/media/shield.svg": "/rapscallion/static/media/shield.38cbb988.svg"
+  "files": {
+    "main.css": "/rapscallion/static/css/main.5709bfc4.css",
+    "main.js": "/rapscallion/static/js/main.a400b48e.js",
+    "static/js/453.7dc41f66.chunk.js": "/rapscallion/static/js/453.7dc41f66.chunk.js",
+    "static/media/dragon.svg": "/rapscallion/static/media/dragon.94d5b87499c147ab477f45016f98661d.svg",
+    "static/media/knot.svg": "/rapscallion/static/media/knot.7014031e5a7258270761ec36547c25d7.svg",
+    "static/media/king.svg": "/rapscallion/static/media/king.6778c5386f3e308f1cb35b9774e2da6f.svg",
+    "static/media/shield.svg": "/rapscallion/static/media/shield.529283c62c63de656a294d51fdb493ed.svg",
+    "static/media/potion.svg": "/rapscallion/static/media/potion.60e680f4a03343bd5024aa271007b931.svg",
+    "static/media/ace.svg": "/rapscallion/static/media/ace.89e0c275e2786fa904538d8096c4d8b2.svg",
+    "static/media/queen.svg": "/rapscallion/static/media/queen.b9f7ef5cbc8699a0a7622548fa724f16.svg",
+    "index.html": "/rapscallion/index.html",
+    "main.5709bfc4.css.map": "/rapscallion/static/css/main.5709bfc4.css.map",
+    "main.a400b48e.js.map": "/rapscallion/static/js/main.a400b48e.js.map",
+    "453.7dc41f66.chunk.js.map": "/rapscallion/static/js/453.7dc41f66.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5709bfc4.css",
+    "static/js/main.a400b48e.js"
+  ]
 }
