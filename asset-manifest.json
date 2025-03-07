@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/rapscallion/static/css/main.5709bfc4.css",
-    "main.js": "/rapscallion/static/js/main.a400b48e.js",
+    "main.js": "/rapscallion/static/js/main.296ab234.js",
     "static/js/453.7dc41f66.chunk.js": "/rapscallion/static/js/453.7dc41f66.chunk.js",
     "static/media/dragon.svg": "/rapscallion/static/media/dragon.94d5b87499c147ab477f45016f98661d.svg",
     "static/media/knot.svg": "/rapscallion/static/media/knot.7014031e5a7258270761ec36547c25d7.svg",
@@ -12,11 +12,11 @@
     "static/media/queen.svg": "/rapscallion/static/media/queen.b9f7ef5cbc8699a0a7622548fa724f16.svg",
     "index.html": "/rapscallion/index.html",
     "main.5709bfc4.css.map": "/rapscallion/static/css/main.5709bfc4.css.map",
-    "main.a400b48e.js.map": "/rapscallion/static/js/main.a400b48e.js.map",
+    "main.296ab234.js.map": "/rapscallion/static/js/main.296ab234.js.map",
     "453.7dc41f66.chunk.js.map": "/rapscallion/static/js/453.7dc41f66.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5709bfc4.css",
-    "static/js/main.a400b48e.js"
+    "static/js/main.296ab234.js"
   ]
 }
