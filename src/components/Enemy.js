@@ -3,6 +3,24 @@ import PropTypes from 'prop-types';
 import Card from './Card';
 import IconDragon from '../images/dragon.svg';
 
+export const calculateDamage = ({ hp, number, shield }) => {
+  if (shield === 0) {
+    return hp - number;
+  } else if (shield < number) {
+    return hp - (number - shield);
+  }
+  return hp;
+};
+
+export const calculateShieldRank = ({ shield, shieldRank, number, breakableShield }) => {
+  if (shield > 0 && shieldRank === 0) {
+    return breakableShield ? [shield, number] : [shield, 0];
+  } else if (shieldRank >= number) {
+    return [shield, number];
+  }
+  return [0, 0];
+};
+
 class Enemy extends Component {
   static propTypes = {
     xp: PropTypes.number.isRequired,
@@ -16,42 +34,22 @@ class Enemy extends Component {
     breakableShield: PropTypes.bool
   };
 
-  calculateEffect = () => {
-    const { hp, number, shield } = this.props;
-    if (shield === 0) {
-      return hp - number;
-    } else if (shield < number) {
-      return hp - (number - shield);
-    }
-    return hp;
-  };
-
-  calculateShieldRank = () => {
-    const { shield, shieldRank, number, breakableShield } = this.props;
-    if (shield > 0 && shieldRank === 0) {
-      return breakableShield ? number : 0;
-    } else if (shieldRank >= number) {
-      return number;
-    }
-    return 0;
-  };
-
   onClick = () => {
-    const { xp, number, shield, updatePlayer, handleClick, suit } = this.props;
-    let effect = this.calculateEffect();
-    let setShield = shield;
-    let setShieldRank = this.calculateShieldRank();
+    const { xp, number, updatePlayer, handleClick, suit } = this.props;
+    let setHp = calculateDamage(this.props);
+    let setShield = calculateShieldRank(this.props)[0];
+    let setShieldRank = calculateShieldRank(this.props)[1];
     let setXP = xp + number;
     let setGameState = '';
 
-    if (effect < 0) {
+    if (setHp <= 0) {
       setGameState = 'Game over';
       setShield = 0;
       setShieldRank = 0;
       setXP = xp;
     }
 
-    updatePlayer({ hp: effect, shield: setShield, shieldRank: setShieldRank, xp: setXP, gameState: setGameState });
+    updatePlayer({ hp: setHp, shield: setShield, shieldRank: setShieldRank, xp: setXP, gameState: setGameState });
     handleClick({ suit, number });
   };
 

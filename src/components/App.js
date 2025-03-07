@@ -125,29 +125,77 @@ class App extends Component {
     });
   }
 
+  endGame = () => {
+    this.setState({
+      hp: 0,
+    });
+  }
+
   renderRoom = () => {
     if (this.state.hp > 0 && this.state.room.length > 0) {
       return (
         <Fragment>
+          <div>
+            <button
+              className='delete'
+              aria-label='close'
+              onClick={this.endGame}
+            ></button>
+            End game
+          </div>
           {this.state.gameVariant}
-          <div className="progress-bar">
-            <span className="progress-bar-rating" style={{ width: `${(this.state.dungeonSize - this.state.progress) / this.state.dungeonSize * 100}%` }}>
-              {`${Math.ceil((48 - this.state.progress) / 48 * 100)}% Complete`}
+          <div className='progress-bar'>
+            <span
+              className='progress-bar-rating'
+              style={{
+                width: `${
+                  ((this.state.dungeonSize - this.state.progress) /
+                    this.state.dungeonSize) *
+                  100
+                }%`,
+              }}
+            >
+              {`${Math.ceil(
+                ((48 - this.state.progress) / 48) * 100
+              )}% Complete`}
             </span>
           </div>
           Progress: {this.state.progress}
-          {this.state.progress > 0 &&
-            <p className="App-intro">
-              <button className="button lined thin" onClick={this.nextRoom} disabled={!this.state.isRoomComplete}>Next Room</button>
-              <button className="button lined thin" onClick={this.run} disabled={!this.state.retreat}>Run</button>
+          {this.state.progress > 0 && (
+            <p className='App-intro'>
+              <button
+                className='button lined thin'
+                onClick={this.nextRoom}
+                disabled={!this.state.isRoomComplete}
+              >
+                Next Room
+              </button>
+              <button
+                className='button lined thin'
+                onClick={this.run}
+                disabled={!this.state.retreat}
+              >
+                Run
+              </button>
             </p>
-          }
-          <div className="App-stats">
-            <p className="text-white">HP: {this.state.hp} • Shield: {this.state.shield}/{this.state.shieldRank}</p>
-            <small>XP: {this.state.xp} • Potions sickness: {this.state.potionDrank && '1'}</small>
+          )}
+          <div className='App-stats'>
+            <p className='text-white'>
+              HP: {this.state.hp} • Shield: {this.state.shield}/
+              {this.state.shieldRank}
+            </p>
+            <small>
+              XP: {this.state.xp} • Potions sickness:{' '}
+              {this.state.potionDrank && '1'}
+            </small>
           </div>
-          <div className="App-room is-clearfix">
-            <Room {...this.state} gainXP={this.gainXP} updatePlayer={this.updatePlayer} handleClick={this.handleClick} />
+          <div className='App-room is-clearfix'>
+            <Room
+              {...this.state}
+              gainXP={this.gainXP}
+              updatePlayer={this.updatePlayer}
+              handleClick={this.handleClick}
+            />
           </div>
         </Fragment>
       );

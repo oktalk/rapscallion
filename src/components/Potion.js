@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import Card from './Card';
 import IconPotion from '../images/potion.svg';
 
-const Potion = ({ potionDrank, hp, number, updatePlayer, handleClick, suit }) => {
+const Potion = ({ potionLimit, potionDrank, hp, number, updatePlayer, handleClick, suit }) => {
   const onClick = () => {
     if (!potionDrank) {
       const maxHeal = number < 11 ? number : 11;
       const effect = Math.min(hp + maxHeal, 21);
-      updatePlayer({ hp: effect, potionDrank: true });
+      updatePlayer({ hp: effect, potionDrank: potionLimit });
     }
     handleClick({ suit, number });
   };
@@ -24,6 +24,7 @@ const Potion = ({ potionDrank, hp, number, updatePlayer, handleClick, suit }) =>
 };
 
 Potion.propTypes = {
+  potionLimit: PropTypes.bool.isRequired,
   potionDrank: PropTypes.bool.isRequired,
   hp: PropTypes.number.isRequired,
   number: PropTypes.number.isRequired,

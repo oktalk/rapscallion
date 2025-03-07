@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import Enemy from './Enemy';
+import Enemy, { calculateShieldRank } from './Enemy';
 
 describe('Enemy Component', () => {
   const defaultProps = {
@@ -66,5 +66,46 @@ describe('Enemy Component', () => {
     render(<Enemy {...props} />);
     fireEvent.click(screen.getByText('5'));
     expect(defaultProps.updatePlayer).toHaveBeenCalledWith(expect.objectContaining({ gameState: 'Game over' }));
+  });
+
+  it('calculates shield should become lower rank', () => {
+    expect(
+      calculateShieldRank({
+        shield: 10,
+        shieldRank: 10,
+        number: 5,
+        breakableShield: true,
+      })
+    ).toStrictEqual([10, 5]);
+  });
+  it('calculates shield rank for unbreakable shield, should be 0', () => {
+    expect(
+      calculateShieldRank({
+        shield: 10,
+        shieldRank: 0,
+        number: 5,
+        breakableShield: false,
+      })
+    ).toStrictEqual([10, 0]);
+  });
+  it('calculates shield rank no shield then all zeros', () => {
+    expect(
+      calculateShieldRank({
+        shield: 0,
+        shieldRank: 0,
+        number: 5,
+        breakableShield: true,
+      })
+    ).toStrictEqual([0, 0]);
+  });
+  it('calculates shield rank low rank against high number should break shield', () => {
+    expect(
+      calculateShieldRank({
+        shield: 10,
+        shieldRank: 5,
+        number: 10,
+        breakableShield: true,
+      })
+    ).toStrictEqual([0, 0]);
   });
 });
