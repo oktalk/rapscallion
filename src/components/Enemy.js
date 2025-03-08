@@ -31,7 +31,8 @@ class Enemy extends Component {
     shield: PropTypes.number.isRequired,
     shieldRank: PropTypes.number.isRequired,
     suit: PropTypes.string.isRequired,
-    breakableShield: PropTypes.bool
+    gameScene: PropTypes.string.isRequired,
+    breakableShield: PropTypes.bool,
   };
 
   onClick = () => {
@@ -41,26 +42,37 @@ class Enemy extends Component {
     let setShieldRank = calculateShieldRank(this.props)[1];
     let setXP = xp + number;
     let setGameState = '';
+    let setGameScene = this.props.gameScene;
 
     if (setHp <= 0) {
       setGameState = 'Game over';
       setShield = 0;
       setShieldRank = 0;
       setXP = xp;
+      setGameScene = 'endGame';
     }
 
-    updatePlayer({ hp: setHp, shield: setShield, shieldRank: setShieldRank, xp: setXP, gameState: setGameState });
+    updatePlayer({
+      hp: setHp,
+      shield: setShield,
+      shieldRank: setShieldRank,
+      xp: setXP,
+      gameState: setGameState,
+      gameScene: setGameScene,
+    });
     handleClick({ suit, number });
   };
 
   render() {
     const { suit, number } = this.props;
     return (
-      <Card {...this.props}
-            centerPip={IconDragon}
-            suit={suit}
-            number={number}
-            onClick={this.onClick} />
+      <Card
+        {...this.props}
+        centerPip={IconDragon}
+        suit={suit}
+        number={number}
+        onClick={this.onClick}
+      />
     );
   }
 }

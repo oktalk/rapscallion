@@ -14,15 +14,17 @@ class Room extends Component {
     updatePlayer: PropTypes.func.isRequired,
     handleClick: PropTypes.func.isRequired,
     shield: PropTypes.number.isRequired,
-    shieldRank: PropTypes.number.isRequired
+    shieldRank: PropTypes.number.isRequired,
+    gameScene: PropTypes.string.isRequired,
   };
 
   renderCard = (card) => {
     const commonProps = {
       ...card,
       hp: this.props.hp,
+      gameScene: this.props.gameScene,
       updatePlayer: this.props.updatePlayer,
-      handleClick: this.props.handleClick
+      handleClick: this.props.handleClick,
     };
 
     switch (card.suit) {
@@ -58,11 +60,7 @@ class Room extends Component {
   };
 
   render() {
-    return (
-      <Fragment>
-        {this.props.room.map(this.renderCard)}
-      </Fragment>
-    );
+    return <Fragment>{this.props.room.map(this.renderCard)}</Fragment>;
   }
 }
 
