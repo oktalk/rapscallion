@@ -51,7 +51,6 @@ class Enemy extends Component {
       setXP = xp;
       setGameScene = 'endGame';
     }
-
     updatePlayer({
       hp: setHp,
       shield: setShield,

@@ -16,6 +16,7 @@ class Room extends Component {
     shield: PropTypes.number.isRequired,
     shieldRank: PropTypes.number.isRequired,
     gameScene: PropTypes.string.isRequired,
+    xp: PropTypes.number.isRequired,
   };
 
   renderCard = (card) => {

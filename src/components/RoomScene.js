@@ -7,7 +7,6 @@ export const RoomScene = ({
   backToIntro,
   updatePlayer,
   handleClick,
-  gainXP,
   run,
   nextRoom,
 }) => {
@@ -77,7 +76,7 @@ export const RoomScene = ({
           shield={initialState.shield}
           shieldRank={initialState.shieldRank}
           gameScene={initialState.gameScene}
-          gainXP={gainXP}
+          xp={initialState.xp}
         />
       </div>
       {initialState.hp > 0 && initialState.room.length > 0 && (
