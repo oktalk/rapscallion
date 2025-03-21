@@ -14,6 +14,7 @@ export const RoomScene = ({
     <Fragment>
       <div>
         <button
+          data-testid='end-game'
           className='delete'
           aria-label='close'
           onClick={backToIntro}
@@ -35,7 +36,7 @@ export const RoomScene = ({
           {`${Math.ceil(((48 - initialState.progress) / 48) * 100)}% Complete`}
         </span>
       </div>
-      Progress: {initialState.progress}
+      <span data-test='progress label'>Progress: {initialState.progress}</span>
       {initialState.progress > 0 && (
         <p className='App-intro'>
           <button
@@ -64,7 +65,7 @@ export const RoomScene = ({
           {initialState.potionDrank && '1'}
         </small>
       </div>
-      <div className='App-room is-clearfix'>
+      <div className='App-room is-clearfix' data-test='cards'>
         <Room
           room={initialState.room}
           hp={initialState.hp}

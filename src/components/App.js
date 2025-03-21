@@ -162,7 +162,9 @@ class App extends Component {
     return (
       <div className='App mb3'>
         <header className='App-header'>
-          <h1 className='App-title'>rapscallion</h1>
+          <h1 className='App-title' data-test='App-title'>
+            rapscallion
+          </h1>
         </header>
 
         <GameScene

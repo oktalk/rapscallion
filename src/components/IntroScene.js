@@ -11,13 +11,14 @@ export const IntroScene = ({ gameState, toggleModal, resetDungeon }) => {
       <h1 className='is-size-3'>{gameState}</h1>
       <br />
       <p>
-        <button className='button lined thin' onClick={toggleModal}>
+        <button data-testid='how-to-play-button' className='button lined thin' onClick={toggleModal}>
           How To Play
         </button>
       </p>
       <img src={Knot} className='knot' />
       <p className='mb3'>
         <button
+          data-test='start-standard-game'
           className='button lined thin'
           onClick={() => resetDungeon(decks.standard, 'standard')}
         >
@@ -28,7 +29,7 @@ export const IntroScene = ({ gameState, toggleModal, resetDungeon }) => {
       <div className='container'>
         <div className='columns'>
           <div className='column'>
-            <img src={Queen} width='150' className='img-responsive' />
+            <img src={Queen} width='150' className='img-responsive' data-test='queen' />
             <button
               className='button lined thin'
               onClick={() => resetDungeon(decks.standard, 'potions')}
@@ -42,7 +43,7 @@ export const IntroScene = ({ gameState, toggleModal, resetDungeon }) => {
           </div>
 
           <div className='column'>
-            <img src={King} width='150' className='img-responsive' />
+            <img src={King} width='150' className='img-responsive' data-test='king' />
             <button
               className='button lined thin'
               onClick={() => resetDungeon(decks.noshields, 'noshields')}
@@ -56,7 +57,7 @@ export const IntroScene = ({ gameState, toggleModal, resetDungeon }) => {
           </div>
 
           <div className='column'>
-            <img src={Ace} width='150' className='img-responsive' />
+            <img src={Ace} width='150' className='img-responsive' data-test='ace' />
             <button
               className='button lined thin'
               onClick={() => resetDungeon(decks.nohearts, 'nohearts')}

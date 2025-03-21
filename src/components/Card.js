@@ -124,7 +124,7 @@ class Card extends Component {
     const { suit, number, centerPip, onClick, hasShieldRank, shieldRank } = this.props;
     const divStyle = { backgroundImage: `url(${centerPip})` };
     return (
-      <div className={`card ${this.suitColor()}`} onClick={onClick}>
+      <div data-test="card" className={`card ${this.suitColor()}`} onClick={onClick}>
         {hasShieldRank && <p className="card-rank">rank: <span className="text-black">{shieldRank}</span></p>}
         <div className="corner top left">
           <h1>{['clubs', 'spades', 'jack', 'joker'].includes(suit) ? '-' : ''}{number}</h1>
