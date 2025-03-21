@@ -15,12 +15,17 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
+    "@testing-library/cypress": "^10.0.3",
+    "cypress": "^14.2.0",
+    "eslint-plugin-cypress": "^4.2.0",
     "gh-pages": "^6.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage --watchAll=false",
+    "e2e": "cypress run",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
@@ -29,6 +34,16 @@
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "extends": [
+          "plugin:cypress/recommended"
+        ],
+        "files": [
+          "cypress/**/*.js"
+        ]
+      }
     ]
   },
   "browserslist": {
