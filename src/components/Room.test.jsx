@@ -2,8 +2,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import Room from './Room';
 
-const mockUpdatePlayer = jest.fn();
-const mockHandleClick = jest.fn();
+const mockUpdatePlayer = vi.fn();
+const mockHandleClick = vi.fn();
 
 const defaultProps = {
   room: [],
