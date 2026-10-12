@@ -1,4 +1,3 @@
-import React from 'react';
 import { IntroScene } from './IntroScene';
 import { RoomScene } from './RoomScene';
 import { EndGameScene } from './EndGameScene';
@@ -7,12 +6,11 @@ import './App.css';
 export const GameScene = ({
   initialState,
   backToIntro,
-  updatePlayer,
-  handleClick,
+  playCard,
   run,
   nextRoom,
   toggleModal,
-  resetDungeon,
+  startGame,
 }) => {
   switch (initialState.gameScene) {
     case 'room':
@@ -20,8 +18,7 @@ export const GameScene = ({
         <RoomScene
           initialState={initialState}
           backToIntro={backToIntro}
-          updatePlayer={updatePlayer}
-          handleClick={handleClick}
+          playCard={playCard}
           run={run}
           nextRoom={nextRoom}
         />
@@ -30,7 +27,7 @@ export const GameScene = ({
       return (
         <EndGameScene
           backToIntro={backToIntro}
-          resetDungeon={resetDungeon}
+          startGame={startGame}
           gameMode={initialState.gameMode}
           gameVariant={initialState.gameVariant}
           gameState={initialState.gameState}
@@ -42,7 +39,7 @@ export const GameScene = ({
         <IntroScene
           gameState={initialState.gameState}
           toggleModal={toggleModal}
-          resetDungeon={resetDungeon}
+          startGame={startGame}
         />
       );
   }

@@ -6,7 +6,7 @@ describe('Card Component', () => {
     suit: 'hearts',
     number: 2,
     centerPip: 'path/to/image.png',
-    onClick: jest.fn(),
+    onClick: vi.fn(),
     hasShieldRank: false,
     shieldRank: 0
   };

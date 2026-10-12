@@ -1,9 +1,6 @@
-import React from "react";
-import { decks } from "../decks";
-
 export const EndGameScene = ({
   backToIntro,
-  resetDungeon,
+  startGame,
   gameVariant,
   gameMode,
   gameState,
@@ -15,7 +12,7 @@ export const EndGameScene = ({
       <p className='text-white is-size-4 mb3'>
         You were playing:
         <br />
-        <span className='has-text-weight-bold'>"{gameVariant}"</span>
+        <span className='has-text-weight-bold'>&quot;{gameVariant}&quot;</span>
       </p>
 
       <p className='mb3'>
@@ -26,7 +23,7 @@ export const EndGameScene = ({
         &nbsp;&nbsp;
         <button
           className='button lined thin'
-          onClick={() => resetDungeon(decks[gameMode], gameMode)}
+          onClick={() => startGame(gameMode)}
         >
           Play again?
         </button>

@@ -28,3 +28,6 @@ yarn-error.log*
 
 # Salesforce VS Code extensions
 .sf/
+
+# Claude Code worktrees
+.claude/worktrees/

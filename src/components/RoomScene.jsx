@@ -1,12 +1,11 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import Room from './Room';
 import PlayerShield from './PlayerShield';
 
 export const RoomScene = ({
   initialState,
   backToIntro,
-  updatePlayer,
-  handleClick,
+  playCard,
   run,
   nextRoom,
 }) => {
@@ -66,19 +65,7 @@ export const RoomScene = ({
         </small>
       </div>
       <div className='App-room is-clearfix' data-test='cards'>
-        <Room
-          room={initialState.room}
-          hp={initialState.hp}
-          potionDrank={initialState.potionDrank}
-          potionLimit={initialState.potionLimit}
-          breakableShield={initialState.breakableShield}
-          updatePlayer={updatePlayer}
-          handleClick={handleClick}
-          shield={initialState.shield}
-          shieldRank={initialState.shieldRank}
-          gameScene={initialState.gameScene}
-          xp={initialState.xp}
-        />
+        <Room room={initialState.room} onPlay={playCard} />
       </div>
       {initialState.hp > 0 && initialState.room.length > 0 && (
         <div className='App-shield'>

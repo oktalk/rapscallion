@@ -6,7 +6,7 @@ A single-player dungeon-crawling card game for the browser, based on [Scoundrel]
 
 **Play it:** [oktalk.github.io/rapscallion](http://oktalk.github.io/rapscallion)
 
-Built with React 19 and Create React App, and tested with Jest, React Testing Library, and Cypress.
+Built with React 19 and Vite, and tested with Vitest, React Testing Library, and Cypress.
 
 <details>
   <summary>Table of Contents</summary>
@@ -28,7 +28,7 @@ The game runs entirely in the browser, so you do not need a backend, a database,
 
 ### Prerequisites
 
-* Node.js 18 or newer (the project is developed on Node 22)
+* Node.js 22.22.2 or later on Node 22, 24.15 or later on Node 24, or Node 26 and newer; the project is developed on Node 22
 * npm, which ships with Node. To update it to the latest version:
   ```sh
   npm install npm@latest -g
@@ -79,10 +79,12 @@ Click **How To Play** on the title screen for an in-game rules summary, or **End
 | Command | What it does |
 |---|---|
 | `npm start` | Runs the dev server on port 3000 |
-| `npm test` | Runs the Jest unit tests in watch mode |
+| `npm test` | Runs the Vitest unit tests in watch mode |
 | `npm run test:coverage` | Runs the unit tests once and prints a coverage report |
 | `npm run e2e` | Runs the Cypress end-to-end tests headlessly (requires the dev server to be running) |
 | `npm run build` | Creates an optimized production build in `build/` |
+| `npm run preview` | Serves the production build locally at http://localhost:3000/rapscallion/ |
+| `npm run lint` | Runs ESLint with warnings treated as errors |
 | `npm run deploy` | Builds the app and publishes `build/` to GitHub Pages |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -110,31 +112,38 @@ Defeating enemies earns XP equal to their value. Clear the entire dungeon to win
 
 ```
 src/
-├── decks.js                 # Card lists for each game mode
-├── index.js                 # React entry point
+├── index.jsx                # React entry point
 ├── images/                  # SVG art for cards and the title screen
+├── game/                    # Pure game rules, no React (see src/game/README.md)
+│   ├── constants.js         # MAX_HP, MAX_CARD_VALUE, ROOM_SIZE
+│   ├── decks.js             # Card lists for each game mode
+│   ├── deck.js              # Shuffle and room drawing
+│   ├── variants.js          # One entry per game mode / character
+│   ├── dungeon.js           # newGame, run, nextRoom, deal, playCard
+│   ├── index.js             # Public API re-exports
+│   └── effects/             # Enemy, potion, and shield card effects
 └── components/
-    ├── App.js               # Holds all game state and the shuffle/deal/run logic
-    ├── GameScene.js         # Picks the intro, room, or end-game scene
-    ├── IntroScene.js        # Title screen and mode selection
-    ├── RoomScene.js         # Stats, progress bar, controls, and the current room
-    ├── EndGameScene.js      # Win/loss screen with "Play again?"
-    ├── Room.js              # Routes each card to Enemy, Potion, or Shield by suit
-    ├── Enemy.js             # Combat logic (calculateDamage, calculateShieldRank)
-    ├── Potion.js            # Healing logic
-    ├── Shield.js            # Shield equip logic
-    ├── PlayerShield.js      # Displays the equipped shield and its rank
-    └── Card.js              # Presentational card with pips and labels
+    ├── App.jsx              # Holds game state and calls src/game functions
+    ├── GameScene.jsx        # Picks the intro, room, or end-game scene
+    ├── IntroScene.jsx       # Title screen and mode selection
+    ├── RoomScene.jsx        # Stats, progress bar, controls, and the current room
+    ├── EndGameScene.jsx     # Win/loss screen with "Play again?"
+    ├── Room.jsx             # Renders each card as Enemy, Potion, or Shield
+    ├── Enemy.jsx            # Enemy card display
+    ├── Potion.jsx           # Potion card display
+    ├── Shield.jsx           # Shield card display
+    ├── PlayerShield.jsx     # Displays the equipped shield and its rank
+    └── Card.jsx             # Presentational card with pips and labels
 cypress/e2e/home.cy.js       # End-to-end tests
 ```
 
-All game state lives in the `App` component and flows down as props. Card components compute their effect and report it back through `updatePlayer`, then remove themselves from the room with `handleClick`. The combat rules are written as pure functions in `Enemy.js`, which keeps them easy to unit test.
+All game state lives in the `App` component and flows down as props. The rules themselves live in `src/game/` as pure functions that take the current state and return the next one, so they can be unit tested without rendering anything. Card components only report which card was played through `onPlay`, and `App` passes that card to `playCard`.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Testing
 
-Unit tests sit next to the components they cover (`*.test.js`) and run with Jest and React Testing Library:
+Unit tests sit next to the code they cover (`*.test.js` and `*.test.jsx`), with game rule tests in `src/game/` and component tests in `src/components/`. They run with Vitest and React Testing Library:
 
 ```sh
 npm test
