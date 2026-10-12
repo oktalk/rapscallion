@@ -35,10 +35,11 @@ describe('template spec', () => {
       cy.get('[data-test="start-standard-game"]').contains('Standard Dungeon').click();
       cy.get('[data-test="progress label"]').contains('Progress: 44');
       cy.get('[data-test="card"]').should('have.length', 4);
-      cy.get('[data-test="card"]')
-        .eq(0)
-        .find('.corner > h1')
-        .should('not.contain', '21')
+      // The deck is shuffled, so skip bosses (21), which would end the game at 21 HP.
+      // The deck holds only two bosses, so at least two of the four cards are safe.
+      cy.get('[data-test="card"] .corner > h1')
+        .filter((_, h1) => !h1.textContent.includes('21'))
+        .first()
         .click();
       cy.get('[data-testid="end-game"]').click();
       cy.get('[data-testid="how-to-play-button"]').contains('How To Play');
