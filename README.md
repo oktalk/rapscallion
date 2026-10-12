@@ -178,4 +178,6 @@ The game is hosted on GitHub Pages at https://oktalk.github.io/rapscallion/. Eve
 
 Distributed under the MIT License. See [LICENSE](LICENSE) for details.
 
+Icons and other artwork belong to their original creators. See [CREDITS.md](CREDITS.md) for attribution.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
