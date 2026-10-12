@@ -85,7 +85,6 @@ Click **How To Play** on the title screen for an in-game rules summary, or **End
 | `npm run build` | Creates an optimized production build in `build/` |
 | `npm run preview` | Serves the production build locally at http://localhost:3000/rapscallion/ |
 | `npm run lint` | Runs ESLint with warnings treated as errors |
-| `npm run deploy` | Builds the app and publishes `build/` to GitHub Pages |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -163,13 +162,7 @@ To open the interactive Cypress runner instead, use `npx cypress open`.
 
 ## Deployment
 
-The game is hosted on GitHub Pages at the URL set in the `homepage` field of `package.json`. To publish a new version:
-
-```sh
-npm run deploy
-```
-
-This builds the app and pushes the `build/` folder to the `gh-pages` branch.
+The game is hosted on GitHub Pages at https://oktalk.github.io/rapscallion/. Every push to `main` runs the [Deploy to GitHub Pages](.github/workflows/deploy.yml) workflow, which runs the unit tests, builds the app, and publishes `build/` to Pages. There is nothing to run by hand. To redeploy without a new commit, start the workflow from the Actions tab with "Run workflow".
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
