@@ -6,7 +6,7 @@ A single-player dungeon-crawling card game for the browser, based on [Scoundrel]
 
 **Play it:** [oktalk.github.io/rapscallion](http://oktalk.github.io/rapscallion)
 
-Built with React 19 and Create React App, and tested with Jest, React Testing Library, and Cypress.
+Built with React 19 and Vite, and tested with Vitest, React Testing Library, and Cypress.
 
 <details>
   <summary>Table of Contents</summary>
@@ -28,7 +28,7 @@ The game runs entirely in the browser, so you do not need a backend, a database,
 
 ### Prerequisites
 
-* Node.js 18 or newer (the project is developed on Node 22)
+* Node.js 22.22.2 or newer (24.15 or newer on Node 24); the project is developed on Node 22
 * npm, which ships with Node. To update it to the latest version:
   ```sh
   npm install npm@latest -g
@@ -79,10 +79,12 @@ Click **How To Play** on the title screen for an in-game rules summary, or **End
 | Command | What it does |
 |---|---|
 | `npm start` | Runs the dev server on port 3000 |
-| `npm test` | Runs the Jest unit tests in watch mode |
+| `npm test` | Runs the Vitest unit tests in watch mode |
 | `npm run test:coverage` | Runs the unit tests once and prints a coverage report |
 | `npm run e2e` | Runs the Cypress end-to-end tests headlessly (requires the dev server to be running) |
 | `npm run build` | Creates an optimized production build in `build/` |
+| `npm run preview` | Serves the production build locally at http://localhost:3000/rapscallion/ |
+| `npm run lint` | Runs ESLint with warnings treated as errors |
 | `npm run deploy` | Builds the app and publishes `build/` to GitHub Pages |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -134,7 +136,7 @@ All game state lives in the `App` component and flows down as props. Card compon
 
 ## Testing
 
-Unit tests sit next to the components they cover (`*.test.js`) and run with Jest and React Testing Library:
+Unit tests sit next to the components they cover (`*.test.jsx`) and run with Vitest and React Testing Library:
 
 ```sh
 npm test

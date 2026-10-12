@@ -6,7 +6,7 @@ Everyone who participates in this project is expected to follow the [Code of Con
 
 ## Setup
 
-You need Node.js 18 or newer (the project is developed on Node 22) and npm, which ships with Node. The game runs entirely in the browser, so there is no backend, database, or API key to configure.
+You need Node.js 22.22.2 or newer (24.15 or newer on Node 24; the project is developed on Node 22) and npm, which ships with Node. The game runs entirely in the browser, so there is no backend, database, or API key to configure.
 
 1. Fork the repository on GitHub, then clone your fork:
    ```sh
@@ -80,9 +80,9 @@ At least one maintainer review is required before merging. Please respond to rev
 
 ## Tests must pass
 
-Every PR must pass the full test suite before it can be merged. GitHub Actions runs the unit tests, a production build, and the Cypress tests on every PR, and `main` is protected so a PR cannot merge until those checks pass. The CI build treats lint warnings as errors. Run both suites locally before you request a review so you catch failures early.
+Every PR must pass the full test suite before it can be merged. GitHub Actions runs the unit tests, a production build, and the Cypress tests on every PR, and `main` is protected so a PR cannot merge until those checks pass. A separate Lint check runs `npm run lint`, which treats warnings as errors. Run both suites locally before you request a review so you catch failures early.
 
-**Unit tests** (Jest and React Testing Library) sit next to the components they cover as `*.test.js` files:
+**Unit tests** (Vitest and React Testing Library) sit next to the components they cover as `*.test.jsx` files:
 
 ```sh
 npm run test:coverage
@@ -107,7 +107,7 @@ A PR that breaks existing tests, or that changes game behavior without test cove
 
 ## Code style
 
-The project uses the ESLint configuration that ships with Create React App, plus the Cypress plugin for files under `cypress/`. Lint errors appear in your terminal and browser while `npm start` is running; please fix them before opening a PR. Beyond that, match the style of the surrounding code.
+The project uses ESLint with a flat config in `eslint.config.mjs`, including the Cypress plugin for files under `cypress/`. Run `npm run lint` and fix any errors or warnings before opening a PR; CI runs the same command. Beyond that, match the style of the surrounding code.
 
 ## Questions
 
