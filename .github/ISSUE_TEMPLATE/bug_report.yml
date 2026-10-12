@@ -1,0 +1,61 @@
+name: Bug report
+description: Report something in the game that is broken or behaves differently from the rules.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Please search the existing issues first to make sure it has not already been reported.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the bug and what you expected to happen instead.
+      placeholder: After running from a room, my shield rank reset to 0 even though I kept the same shield.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: List the steps that trigger the bug. Include the cards in the room if they matter.
+      placeholder: |
+        1. Start a Standard Dungeon game
+        2. Equip the 5 of diamonds
+        3. Fight the 4 of spades
+        4. Click Run
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Game mode
+      options:
+        - Standard Dungeon
+        - Queen of Hearts
+        - King of Hearts
+        - Ace of Hearts
+        - Not mode-specific
+    validations:
+      required: true
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Where did you see it?
+      options:
+        - Live site (oktalk.github.io/rapscallion)
+        - Local dev server (npm start)
+        - Both
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and OS
+      placeholder: Chrome 130 on macOS 15
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots or console output
+      description: Paste any screenshots or errors from the browser console.

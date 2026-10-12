@@ -15,7 +15,7 @@ export const IntroScene = ({ gameState, toggleModal, resetDungeon }) => {
           How To Play
         </button>
       </p>
-      <img src={Knot} className='knot' />
+      <img src={Knot} alt='' className='knot' />
       <p className='mb3'>
         <button
           data-test='start-standard-game'
@@ -29,7 +29,7 @@ export const IntroScene = ({ gameState, toggleModal, resetDungeon }) => {
       <div className='container'>
         <div className='columns'>
           <div className='column'>
-            <img src={Queen} width='150' className='img-responsive' data-test='queen' />
+            <img src={Queen} alt='Queen of Hearts' width='150' className='img-responsive' data-test='queen' />
             <button
               className='button lined thin'
               onClick={() => resetDungeon(decks.standard, 'potions')}
@@ -43,7 +43,7 @@ export const IntroScene = ({ gameState, toggleModal, resetDungeon }) => {
           </div>
 
           <div className='column'>
-            <img src={King} width='150' className='img-responsive' data-test='king' />
+            <img src={King} alt='King of Hearts' width='150' className='img-responsive' data-test='king' />
             <button
               className='button lined thin'
               onClick={() => resetDungeon(decks.noshields, 'noshields')}
@@ -57,7 +57,7 @@ export const IntroScene = ({ gameState, toggleModal, resetDungeon }) => {
           </div>
 
           <div className='column'>
-            <img src={Ace} width='150' className='img-responsive' data-test='ace' />
+            <img src={Ace} alt='Ace of Hearts' width='150' className='img-responsive' data-test='ace' />
             <button
               className='button lined thin'
               onClick={() => resetDungeon(decks.nohearts, 'nohearts')}
