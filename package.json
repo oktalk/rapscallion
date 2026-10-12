@@ -31,7 +31,7 @@
     "preview": "vite preview",
     "test": "react-scripts test",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
-    "lint": "eslint --max-warnings=0 src cypress cypress.config.js setupTests.js",
+    "lint": "eslint --max-warnings=0 --ext .js,.jsx src cypress cypress.config.js setupTests.js",
     "e2e": "cypress run",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
