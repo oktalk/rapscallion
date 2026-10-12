@@ -1,161 +1,37 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import * as game from '../game';
 import { GameScene } from './GameScene';
-import PlayerShield from './PlayerShield';
 import './App.css';
 
 class App extends Component {
   state = {
-    dungeon: [],
-    dungeonType: 'nohearts',
-    regenerate: 0,
-    room: [],
-    hp: 21,
-    xp: 0,
-    shield: 0,
-    shieldRank: 0,
-    potionDrank: false,
-    potionLimit: true,
-    breakableShield: true,
-    progress: 52,
-    retreat: false,
-    isRoomComplete: false,
+    ...game.initialGameState,
     modal: false,
-    gameState: '',
-    gameVariant: 'Basic game',
-    gameScene: 'intro',
-    gameMode: 'standard',
   };
 
-  shuffle = (currentDungeon, currentRoom) => {
-    const gatherCards = [...currentDungeon, ...currentRoom];
-    for (let i = gatherCards.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [gatherCards[i], gatherCards[j]] = [gatherCards[j], gatherCards[i]];
-    }
-    const dungeonRoom = gatherCards.splice(-4);
-    this.setState((prevState) => ({
-      ...prevState,
-      dungeon: gatherCards,
-      hp: prevState.hp + this.state.regenerate,
-      room: dungeonRoom,
-      progress: gatherCards.length,
-      potionDrank: false,
-      isRoomComplete: false,
-      gameState: dungeonRoom.length === 0 ? 'You won!' : prevState.gameState,
-      gameScene: dungeonRoom.length === 0 ? 'endGame' : prevState.gameScene,
-    }));
-  };
-
-  deal = (dungeon) => {
-    const room = dungeon.splice(-4);
-    this.setState((prevState) => ({
-      ...prevState,
-      dungeon,
-      room,
-      hp: prevState.hp + this.state.regenerate,
-      potionDrank: false,
-      progress: dungeon.length,
-      roomComplete: false,
-      retreat: true,
-      isRoomComplete: false,
-      gameState: dungeon.length === 0 ? 'You won!' : '',
-      gameScene: dungeon.length === 0 ? 'endGame' : prevState.gameScene,
-    }));
+  startGame = (mode) => {
+    this.setState((prevState) => game.newGame(prevState, mode));
   };
 
   run = () => {
-    this.shuffle(this.state.dungeon, this.state.room);
-    this.setState((prevState) => ({
-      ...prevState,
-      retreat: !prevState.retreat,
-    }));
+    this.setState((prevState) => game.run(prevState));
   };
 
   nextRoom = () => {
-    this.shuffle(this.state.dungeon, this.state.room);
-    this.setState((prevState) => ({
-      ...prevState,
-      retreat: this.state.breakableShield,
-    }));
+    this.setState((prevState) => game.nextRoom(prevState));
   };
 
-  resetDungeon = (deck, type) => {
-    const gameDesc = {
-      nohearts: 'Heal 3 after each room',
-      noshields: 'Unbreakable shield',
-      potions: 'No potion limit',
-      standard: 'Basic game',
-    }[type];
-
-    this.shuffle(deck, []);
-    this.setState((prevState) => ({
-      ...prevState,
-      dungeonSize: deck.length,
-      regenerate: type === 'nohearts' ? 3 : 0,
-      potionLimit: type === 'potions' ? false : true,
-      breakableShield: type === 'noshields' ? false : true,
-      hp: 21,
-      xp: 0,
-      shield: type === 'noshields' ? 7 : 0,
-      shieldRank: 0,
-      retreat: type === 'noshields' ? false : true,
-      gameVariant: gameDesc,
-      gameScene: 'room',
-      gameMode: type || prevState.gameMode,
-    }));
-  };
-
-  updatePlayer = (playerUpdate) => {
-    this.setState((prevState) => ({
-      ...prevState,
-      ...playerUpdate,
-    }));
-  };
-
-  handleClick = (target) => {
-    const room = this.state.room.filter(
-      (card) => card.suit !== target.suit || card.number !== target.number
-    );
-    this.setState(
-      (prevState) => ({
-        ...prevState,
-        room,
-        isRoomComplete: room.length <= 1,
-        retreat: false,
-      }),
-      () => {
-        if (room.length === 0) {
-          this.deal(this.state.dungeon);
-        }
-      }
-    );
+  playCard = (card) => {
+    this.setState((prevState) => game.playCard(prevState, card));
   };
 
   backToIntro = () => {
-    this.setState((prevState) => ({
-      ...prevState,
-      gameScene: 'intro',
-    }));
-  };
-
-  renderShield = () => {
-    if (this.state.hp > 0 && this.state.room.length > 0) {
-      return (
-        <div className='App-shield'>
-          {this.state.shield > 0 && (
-            <PlayerShield
-              shield={this.state.shield}
-              shieldRank={this.state.shieldRank}
-            />
-          )}
-        </div>
-      );
-    }
+    this.setState({ gameScene: 'intro' });
   };
 
   toggleModal = () => {
-    this.setState((prevState) => ({ ...prevState, modal: !this.state.modal }));
+    this.setState((prevState) => ({ modal: !prevState.modal }));
   };
 
   render() {
@@ -170,12 +46,11 @@ class App extends Component {
         <GameScene
           initialState={this.state}
           backToIntro={this.backToIntro}
-          updatePlayer={this.updatePlayer}
-          handleClick={this.handleClick}
+          playCard={this.playCard}
           run={this.run}
           nextRoom={this.nextRoom}
           toggleModal={this.toggleModal}
-          resetDungeon={this.resetDungeon}
+          startGame={this.startGame}
         />
 
         {this.state.modal && (
