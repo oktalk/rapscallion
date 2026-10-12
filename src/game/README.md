@@ -28,6 +28,7 @@ All game rules live here as pure functions with the shape
 1. Create `effects/<name>.js` exporting `(state, card) => newState`, plus `effects/<name>.test.js`.
 2. Map the suit in `cardType` and add the effect to `EFFECTS` in `effects/index.js`.
 3. Add a component in `src/components/` and register it in `CARD_COMPONENTS` in `Room.js`.
+4. Update `cardLabel` and the negative-value suit list in `src/components/Card.js` so the new card shows the right label.
 
 ## Adding a variant
 

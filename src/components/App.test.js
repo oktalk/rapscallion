@@ -72,3 +72,17 @@ describe('playing a standard game', () => {
     expect(screen.getByText('Run')).toBeDisabled();
   });
 });
+
+describe('starting each variant from the intro screen', () => {
+  test.each([
+    ['Standard Dungeon', /Standard Dungeon/i, 'Basic game'],
+    ['Queen of Hearts', /Play As Queen of Hearts/i, 'No potion limit'],
+    ['King of Hearts', /Play As King of Hearts/i, 'Unbreakable shield'],
+    ['Ace of Hearts', /Play As Ace of Hearts/i, 'Heal 3 after each room'],
+  ])('%s shows its variant description', (name, buttonText, description) => {
+    render(<App />);
+    fireEvent.click(screen.getByText(buttonText));
+
+    expect(screen.getByText(description)).toBeInTheDocument();
+  });
+});

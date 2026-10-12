@@ -43,7 +43,7 @@ describe('newGame', () => {
     });
   });
 
-  it('carries over the previous gameState message (current behavior)', () => {
+  it('KNOWN BUG #5 (possibly intended): carries over the previous gameState message', () => {
     const finished = state({ gameState: 'Game over' });
     expect(newGame(finished, 'standard', noShuffle).gameState).toBe('Game over');
   });
