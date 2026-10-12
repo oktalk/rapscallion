@@ -1,5 +1,5 @@
 import React from "react";
-import { decks } from "../decks";
+import { decks } from "../game/decks";
 
 export const EndGameScene = ({
   backToIntro,

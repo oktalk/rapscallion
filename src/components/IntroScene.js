@@ -3,7 +3,7 @@ import Knot from '../images/knot.svg';
 import Queen from '../images/queen.svg';
 import King from '../images/king.svg';
 import Ace from '../images/ace.svg';
-import { decks } from '../decks';
+import { decks } from '../game/decks';
 
 export const IntroScene = ({ gameState, toggleModal, resetDungeon }) => {
   return (
