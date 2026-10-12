@@ -118,6 +118,7 @@ src/
 │   ├── deck.js              # Shuffle and room drawing
 │   ├── variants.js          # One entry per game mode / character
 │   ├── dungeon.js           # newGame, run, nextRoom, deal, playCard
+│   ├── index.js             # Public API re-exports
 │   └── effects/             # Enemy, potion, and shield card effects
 └── components/
     ├── App.js               # Holds game state and calls src/game functions
@@ -140,7 +141,7 @@ All game state lives in the `App` component and flows down as props. The rules t
 
 ## Testing
 
-Unit tests sit next to the components they cover (`*.test.js`) and run with Jest and React Testing Library:
+Unit tests sit next to the code they cover (`*.test.js`), with game rule tests in `src/game/` and component tests in `src/components/`. They run with Jest and React Testing Library:
 
 ```sh
 npm test

@@ -14,6 +14,7 @@ All game rules live here as pure functions with the shape
 | `variants.js` | One entry per game mode / character |
 | `effects/` | One file per card type, plus `index.js` to route a card to its effect |
 | `dungeon.js` | Room flow: `newGame`, `run`, `nextRoom`, `deal`, `playCard` |
+| `index.js` | Public API: re-exports what components need |
 
 ## Rules for this folder
 
@@ -40,12 +41,22 @@ Build a state with only the fields that matter on top of `initialGameState`,
 call the function, and assert on the result:
 
 ```js
-const next = playCard(
-  { ...initialGameState, gameScene: 'room', dungeon, room: [lastCard], hp: 2 },
-  lastCard
-);
-expect(next.gameState).toBe('Game over');
+import { initialGameState, playCard } from './index';
+
+const card = (suit, number) => ({ suit, number });
+
+test('a potion heals up to 21', () => {
+  const potion = card('hearts', 7);
+  const state = {
+    ...initialGameState,
+    gameScene: 'room',
+    hp: 18,
+    room: [potion, card('spades', 2)],
+  };
+  expect(playCard(state, potion).hp).toBe(21);
+});
 ```
 
 Tests marked `KNOWN BUG` in `dungeon.test.js` pin current, incorrect
-behavior. When fixing one, flip its assertion to the correct behavior.
+behavior so the bug is visible. To fix one, change its assertion to the
+correct behavior, watch it fail, then change the code until it passes.
