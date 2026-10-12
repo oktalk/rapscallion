@@ -17,15 +17,18 @@
   },
   "devDependencies": {
     "@testing-library/cypress": "^10.0.3",
+    "@vitejs/plugin-react": "^5.2.0",
     "cypress": "^14.2.0",
     "eslint": "^8.57.1",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-cypress": "^3.6.0",
-    "gh-pages": "^6.3.0"
+    "gh-pages": "^6.3.0",
+    "vite": "^8.3.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "test": "react-scripts test",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
     "lint": "eslint --max-warnings=0 src cypress cypress.config.js setupTests.js",
