@@ -110,25 +110,31 @@ Defeating enemies earns XP equal to their value. Clear the entire dungeon to win
 
 ```
 src/
-├── decks.js                 # Card lists for each game mode
 ├── index.js                 # React entry point
 ├── images/                  # SVG art for cards and the title screen
+├── game/                    # Pure game rules, no React (see src/game/README.md)
+│   ├── constants.js         # MAX_HP, MAX_CARD_VALUE, ROOM_SIZE
+│   ├── decks.js             # Card lists for each game mode
+│   ├── deck.js              # Shuffle and room drawing
+│   ├── variants.js          # One entry per game mode / character
+│   ├── dungeon.js           # newGame, run, nextRoom, deal, playCard
+│   └── effects/             # Enemy, potion, and shield card effects
 └── components/
-    ├── App.js               # Holds all game state and the shuffle/deal/run logic
+    ├── App.js               # Holds game state and calls src/game functions
     ├── GameScene.js         # Picks the intro, room, or end-game scene
     ├── IntroScene.js        # Title screen and mode selection
     ├── RoomScene.js         # Stats, progress bar, controls, and the current room
     ├── EndGameScene.js      # Win/loss screen with "Play again?"
-    ├── Room.js              # Routes each card to Enemy, Potion, or Shield by suit
-    ├── Enemy.js             # Combat logic (calculateDamage, calculateShieldRank)
-    ├── Potion.js            # Healing logic
-    ├── Shield.js            # Shield equip logic
+    ├── Room.js              # Renders each card as Enemy, Potion, or Shield
+    ├── Enemy.js             # Enemy card display
+    ├── Potion.js            # Potion card display
+    ├── Shield.js            # Shield card display
     ├── PlayerShield.js      # Displays the equipped shield and its rank
     └── Card.js              # Presentational card with pips and labels
 cypress/e2e/home.cy.js       # End-to-end tests
 ```
 
-All game state lives in the `App` component and flows down as props. Card components compute their effect and report it back through `updatePlayer`, then remove themselves from the room with `handleClick`. The combat rules are written as pure functions in `Enemy.js`, which keeps them easy to unit test.
+All game state lives in the `App` component and flows down as props. The rules themselves live in `src/game/` as pure functions that take the current state and return the next one, so they can be unit tested without rendering anything. Card components only report which card was played through `onPlay`, and `App` passes that card to `playCard`.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
