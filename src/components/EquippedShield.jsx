@@ -44,7 +44,7 @@ ShatteredShield.propTypes = {
 
 // Shows the player's shield and reacts to attacks: a recoil when the shield
 // absorbs a hit, and a shatter when the hit breaks it.
-const EquippedShield = ({ shield, shieldRank, impact = null }) => {
+const EquippedShield = ({ shield, shieldRank, impact = null, golden = false }) => {
   const [seenImpact, setSeenImpact] = useState(impact);
   const [recoil, setRecoil] = useState(null);
   const [shattered, setShattered] = useState(null);
@@ -62,7 +62,13 @@ const EquippedShield = ({ shield, shieldRank, impact = null }) => {
   return (
     <Fragment>
       {shield > 0 && (
-        <PlayerShield key={shield} shield={shield} shieldRank={shieldRank} recoilId={recoilId} />
+        <PlayerShield
+          key={shield}
+          shield={shield}
+          shieldRank={shieldRank}
+          recoilId={recoilId}
+          golden={golden}
+        />
       )}
       {shattered && (
         <ShatteredShield
@@ -82,6 +88,7 @@ EquippedShield.propTypes = {
   shield: PropTypes.number.isRequired,
   shieldRank: PropTypes.number.isRequired,
   impact: shieldImpactShape,
+  golden: PropTypes.bool,
 };
 
 export default EquippedShield;

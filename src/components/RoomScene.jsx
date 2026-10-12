@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import classnames from 'classnames';
 import Room from './Room';
 import EquippedShield from './EquippedShield';
 import HitPoints from './HitPoints';
@@ -11,6 +12,11 @@ export const RoomScene = ({
   run,
   nextRoom,
 }) => {
+  // Leaving a room heals in Ace of Hearts mode, so the exits pulse to draw the eye.
+  const exitButtonClass = classnames('button lined thin', {
+    'pulse-red': initialState.regenerate > 0,
+  });
+
   return (
     <Fragment>
       <div>
@@ -41,14 +47,14 @@ export const RoomScene = ({
       {initialState.progress > 0 && (
         <p className='App-intro'>
           <button
-            className='button lined thin'
+            className={exitButtonClass}
             onClick={nextRoom}
             disabled={!initialState.isRoomComplete}
           >
             Next Room
           </button>
           <button
-            className='button lined thin'
+            className={exitButtonClass}
             onClick={run}
             disabled={!initialState.retreat}
           >
@@ -59,11 +65,11 @@ export const RoomScene = ({
       <div className='App-stats'>
         <p className='text-white'>
           <HitPoints hp={initialState.hp} /> • Shield: {initialState.shield}/
-          {initialState.shieldRank}
+          {initialState.breakableShield ? initialState.shieldRank : '∞'}
         </p>
         <small>
           XP: {initialState.xp} • Potions sickness:{' '}
-          {initialState.potionDrank && '1'}
+          {initialState.potionLimit ? initialState.potionDrank && '1' : '∞'}
         </small>
       </div>
       <div className='App-room is-clearfix' data-test='cards'>
@@ -75,6 +81,7 @@ export const RoomScene = ({
             shield={initialState.shield}
             shieldRank={initialState.shieldRank}
             impact={initialState.shieldImpact}
+            golden={!initialState.breakableShield}
           />
         </div>
       )}

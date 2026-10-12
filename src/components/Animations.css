@@ -234,6 +234,17 @@
   to { opacity: 0; }
 }
 
+/* Exit buttons pulse red while they can be used. */
+.button.pulse-red:not([disabled]) {
+  border-color: #ED143D;
+  animation: pulse-red 1.4s ease-out infinite;
+}
+@keyframes pulse-red {
+  0% { box-shadow: 0 0 0 0 rgba(237, 20, 61, 0.7); }
+  70% { box-shadow: 0 0 0 12px rgba(237, 20, 61, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(237, 20, 61, 0); }
+}
+
 /*
  * Respect reduced motion. Animations that gate game flow or clean-up keep a
  * near-zero duration so animationend still fires.
@@ -245,7 +256,8 @@
   .hp.hp-heal,
   .hp.hp-hit,
   .hp-float,
-  .damage-flash {
+  .damage-flash,
+  .button.pulse-red:not([disabled]) {
     animation: none;
   }
   .hp-float,
