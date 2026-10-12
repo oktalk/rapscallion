@@ -3,10 +3,13 @@ import Card from './Card';
 import IconShield from '../images/shield.svg';
 import './PlayerShield.css';
 
-const PlayerShield = ({ shield, shieldRank }) => {
+const PlayerShield = ({ shield, shieldRank, recoilId = 0 }) => {
   return (
     <div className="Player-shield">
+      {/* A new key remounts the card, which restarts the recoil animation. */}
       <Card
+        key={recoilId}
+        className={recoilId > 0 ? 'shield-recoil' : undefined}
         hasShieldRank={shieldRank > 0}
         shieldRank={shieldRank}
         centerPip={IconShield}
@@ -18,7 +21,8 @@ const PlayerShield = ({ shield, shieldRank }) => {
 
 PlayerShield.propTypes = {
   shield: PropTypes.number.isRequired,
-  shieldRank: PropTypes.number.isRequired
+  shieldRank: PropTypes.number.isRequired,
+  recoilId: PropTypes.number
 };
 
 export default PlayerShield;

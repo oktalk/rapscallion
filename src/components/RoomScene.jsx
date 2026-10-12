@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import Room from './Room';
-import PlayerShield from './PlayerShield';
+import EquippedShield from './EquippedShield';
 import HitPoints from './HitPoints';
 import './Animations.css';
 
@@ -71,13 +71,11 @@ export const RoomScene = ({
       </div>
       {initialState.hp > 0 && initialState.room.length > 0 && (
         <div className='App-shield'>
-          {initialState.shield > 0 && (
-            <PlayerShield
-              key={initialState.shield}
-              shield={initialState.shield}
-              shieldRank={initialState.shieldRank}
-            />
-          )}
+          <EquippedShield
+            shield={initialState.shield}
+            shieldRank={initialState.shieldRank}
+            impact={initialState.shieldImpact}
+          />
         </div>
       )}
     </Fragment>

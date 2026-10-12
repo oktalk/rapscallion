@@ -85,31 +85,175 @@
   }
 }
 
-/* HP flashes red and swells whenever it changes. */
+/* The shield jolts when it absorbs a hit. */
+.App-shield .card.shield-recoil {
+  animation: shield-recoil 420ms ease-out;
+}
+@keyframes shield-recoil {
+  15% {
+    transform: translateY(14px) scale(0.95) rotate(-3deg);
+    box-shadow: 0 0 0 10px rgba(237, 20, 61, 0.25), 0 10px 30px rgba(237, 20, 61, 0.6);
+  }
+  40% {
+    transform: translateY(-4px) rotate(2deg);
+  }
+  65% {
+    transform: rotate(-1deg);
+  }
+}
+
+/* A broken shield cracks down the middle and the halves fall apart. */
+.Player-shield.shield-shatter {
+  animation: none;
+  pointer-events: none;
+}
+/* Contain the floated card so the clip-path percentages match its size. */
+.shield-shard {
+  display: flow-root;
+  width: fit-content;
+}
+.shield-shard + .shield-shard {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.shield-shard-left {
+  clip-path: polygon(0 0, 56% 0, 44% 22%, 60% 45%, 42% 68%, 55% 100%, 0 100%);
+  animation: shard-left 750ms forwards;
+}
+.shield-shard-right {
+  clip-path: polygon(56% 0, 100% 0, 100% 100%, 55% 100%, 42% 68%, 60% 45%, 44% 22%);
+  animation: shard-right 750ms forwards;
+}
+@keyframes shard-left {
+  10% { transform: translateX(-5px); }
+  20% { transform: translateX(3px); }
+  30% {
+    transform: translateX(-2px) rotate(-2deg);
+    animation-timing-function: cubic-bezier(0.5, 0, 0.9, 0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-70px, 280px) rotate(-28deg);
+  }
+}
+@keyframes shard-right {
+  10% { transform: translateX(5px); }
+  20% { transform: translateX(-3px); }
+  30% {
+    transform: translateX(2px) rotate(2deg);
+    animation-timing-function: cubic-bezier(0.5, 0, 0.9, 0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(70px, 300px) rotate(32deg);
+  }
+}
+
+/* HP readout. Healing and damage each get their own reaction. */
+.hp-readout {
+  position: relative;
+  display: inline-block;
+}
 .hp {
   display: inline-block;
 }
-.hp.hp-pulse {
-  animation: hp-pulse 600ms ease-out;
+
+/* Healing: HP flashes red and swells. */
+.hp.hp-heal {
+  animation: hp-heal 600ms ease-out;
 }
-@keyframes hp-pulse {
+@keyframes hp-heal {
   35% {
     color: #ED143D;
     transform: scale(1.5);
   }
 }
 
+/* Damage: HP shakes, shrinks and dims. Bigger hits shake harder. */
+.hp.hp-hit {
+  animation: hp-hit 550ms ease-out;
+}
+.hp.hp-hit-light { --shake: 3px; }
+.hp.hp-hit-medium { --shake: 6px; }
+.hp.hp-hit-heavy { --shake: 10px; animation-duration: 750ms; }
+@keyframes hp-hit {
+  10% {
+    color: #555;
+    transform: translateX(calc(var(--shake) * -1)) scale(0.85);
+  }
+  25% { transform: translateX(var(--shake)) scale(0.85); }
+  40% { transform: translateX(calc(var(--shake) * -0.6)) scale(0.88); }
+  55% {
+    color: #555;
+    transform: translateX(calc(var(--shake) * 0.4)) scale(0.92);
+  }
+  75% { transform: translateX(calc(var(--shake) * -0.2)); }
+}
+
+/* The amount gained or lost floats up out of the readout. */
+.hp-float {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  font-weight: 700;
+  font-size: 1.2em;
+  pointer-events: none;
+  white-space: nowrap;
+  animation: hp-float 1000ms ease-out forwards;
+}
+.hp-float-gain {
+  color: #ED143D;
+}
+.hp-float-loss {
+  color: #ccc;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+@keyframes hp-float {
+  from {
+    opacity: 1;
+    transform: translate(-50%, 6px) scale(1.2);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -36px) scale(1);
+  }
+}
+
+/* Heavy hits flash red around the edges of the screen. */
+.damage-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  box-shadow: inset 0 0 160px 40px rgba(237, 20, 61, 0.65);
+  animation: damage-flash 700ms ease-out forwards;
+}
+@keyframes damage-flash {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
 /*
- * Respect reduced motion. Exits keep a near-zero duration so animationend
- * still fires and the card is played.
+ * Respect reduced motion. Animations that gate game flow or clean-up keep a
+ * near-zero duration so animationend still fires.
  */
 @media (prefers-reduced-motion: reduce) {
   .App-room .card,
   .Player-shield,
-  .hp.hp-pulse {
+  .App-shield .card.shield-recoil,
+  .hp.hp-heal,
+  .hp.hp-hit,
+  .hp-float,
+  .damage-flash {
     animation: none;
   }
-  .App-room .card[class*='card-exit-'] {
+  .hp-float,
+  .damage-flash {
+    display: none;
+  }
+  .App-room .card[class*='card-exit-'],
+  .shield-shard {
     animation-duration: 1ms;
   }
 }

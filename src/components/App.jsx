@@ -8,6 +8,7 @@ class App extends Component {
   state = {
     ...game.initialGameState,
     modal: false,
+    shieldImpact: null,
   };
 
   startGame = (mode) => {
@@ -23,7 +24,20 @@ class App extends Component {
   };
 
   playCard = (card) => {
-    this.setState((prevState) => game.playCard(prevState, card));
+    this.setState((prevState) => {
+      const next = game.playCard(prevState, card);
+      const kind = game.shieldImpact(prevState, next, card);
+      if (!kind) return next;
+      return {
+        ...next,
+        shieldImpact: {
+          id: (prevState.shieldImpact?.id ?? 0) + 1,
+          kind,
+          shield: prevState.shield,
+          shieldRank: prevState.shieldRank,
+        },
+      };
+    });
   };
 
   backToIntro = () => {
