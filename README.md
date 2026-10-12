@@ -19,6 +19,7 @@ Built with React 19 and Vite, and tested with Vitest, React Testing Library, and
     <li><a href="#deployment">Deployment</a></li>
     <li><a href="#resources">Resources</a></li>
     <li><a href="#license">License</a></li>
+    <li><a href="#contributing">Contributing</a></li>
   </ol>
 </details>
 
@@ -179,5 +180,9 @@ The game is hosted on GitHub Pages at https://oktalk.github.io/rapscallion/. Eve
 Distributed under the MIT License. See [LICENSE](LICENSE) for details.
 
 Icons and other artwork belong to their original creators. See [CREDITS.md](CREDITS.md) for attribution.
+
+## Contributing
+- Read our [contribution guidelines](CONTRIBUTING.md)
+- Please respect our [AI policy](AI_POLICY.md).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
