@@ -18,6 +18,7 @@ Built with React 19 and Create React App, and tested with Jest, React Testing Li
     <li><a href="#testing">Testing</a></li>
     <li><a href="#deployment">Deployment</a></li>
     <li><a href="#resources">Resources</a></li>
+    <li><a href="#license">License</a></li>
   </ol>
 </details>
 
@@ -168,5 +169,11 @@ This builds the app and pushes the `build/` folder to the `gh-pages` branch.
 * [Scoundrel rules](http://www.stfj.net/art/2011/Scoundrel.pdf), the original solo card game this project adapts
 * [Game variant idea](https://boardgamegeek.com/thread/1805997/seems-be-almost-identical-scoundrel), a BoardGameGeek thread on a Scoundrel variant
 * [Donsol](https://hundredrabbits.itch.io/donsol) by Hundred Rabbits, which inspired the design
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## License
+
+Distributed under the MIT License. See [LICENSE](LICENSE) for details.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

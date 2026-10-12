@@ -2,6 +2,7 @@
   "name": "rapscallion",
   "homepage": "http://oktalk.github.io/rapscallion",
   "version": "0.1.0",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
@@ -17,7 +18,9 @@
   "devDependencies": {
     "@testing-library/cypress": "^10.0.3",
     "cypress": "^14.2.0",
-    "eslint-plugin-cypress": "^4.2.0",
+    "eslint": "^8.57.1",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-cypress": "^3.6.0",
     "gh-pages": "^6.3.0"
   },
   "scripts": {
@@ -25,6 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
+    "lint": "eslint --max-warnings=0 src cypress cypress.config.js setupTests.js",
     "e2e": "cypress run",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
