@@ -1,4 +1,3 @@
-import React from 'react';
 import { IntroScene } from './IntroScene';
 import { RoomScene } from './RoomScene';
 import { EndGameScene } from './EndGameScene';

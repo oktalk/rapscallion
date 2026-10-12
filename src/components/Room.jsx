@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 import Potion from './Potion';
 import Enemy from './Enemy';

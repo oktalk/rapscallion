@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import Card from './Card';
 import IconDragon from '../images/dragon.svg';

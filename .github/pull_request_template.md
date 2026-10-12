@@ -19,4 +19,4 @@ Closes #<!-- issue number -->
 - [ ] `npm run test:coverage` passes
 - [ ] `npm run e2e` passes (with `npm start` running in another terminal)
 - [ ] I added or updated tests for any change in behavior
-- [ ] There are no new lint warnings in the `npm start` output
+- [ ] `npm run lint` passes with no warnings

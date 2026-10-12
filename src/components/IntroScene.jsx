@@ -1,4 +1,3 @@
-import React from 'react';
 import Knot from '../images/knot.svg';
 import Queen from '../images/queen.svg';
 import King from '../images/king.svg';
