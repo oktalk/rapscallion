@@ -5,7 +5,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import pluginCypress from 'eslint-plugin-cypress/flat';
 
 export default [
-  { ignores: ['build', 'coverage', 'node_modules'] },
+  { ignores: ['.claude', 'build', 'coverage', 'node_modules'] },
   {
     files: ['src/**/*.{js,jsx}'],
     languageOptions: {

@@ -6,7 +6,7 @@ Everyone who participates in this project is expected to follow the [Code of Con
 
 ## Setup
 
-You need Node.js 22.22.2 or newer (24.15 or newer on Node 24; the project is developed on Node 22) and npm, which ships with Node. The game runs entirely in the browser, so there is no backend, database, or API key to configure.
+You need Node.js 22.22.2 or later on Node 22, 24.15 or later on Node 24, or Node 26 and newer (the project is developed on Node 22), and npm, which ships with Node. The game runs entirely in the browser, so there is no backend, database, or API key to configure.
 
 1. Fork the repository on GitHub, then clone your fork:
    ```sh

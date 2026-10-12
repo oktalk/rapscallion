@@ -28,7 +28,7 @@ The game runs entirely in the browser, so you do not need a backend, a database,
 
 ### Prerequisites
 
-* Node.js 22.22.2 or newer (24.15 or newer on Node 24); the project is developed on Node 22
+* Node.js 22.22.2 or later on Node 22, 24.15 or later on Node 24, or Node 26 and newer; the project is developed on Node 22
 * npm, which ships with Node. To update it to the latest version:
   ```sh
   npm install npm@latest -g
