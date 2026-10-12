@@ -100,7 +100,7 @@ npm run e2e
 
 When you change behavior, add or update tests to cover it:
 
-* Combat, healing, and shield rules belong in unit tests. The combat logic in `src/components/Enemy.js` is written as pure functions (`calculateDamage`, `calculateShieldRank`) so it can be tested directly.
+* Combat, healing, shield, and room-flow rules belong in unit tests next to the code in `src/game/`. Every rule there is a pure function, so a test builds a state, calls the function, and checks the result. See [src/game/README.md](src/game/README.md).
 * User-facing flows, such as choosing a mode, clearing a room, or reaching the end screen, belong in `cypress/e2e/`. Select elements by test attributes rather than CSS classes. The existing code uses both `data-testid` and `data-test`; please use `data-testid` for anything new.
 
 A PR that breaks existing tests, or that changes game behavior without test coverage, will be sent back for changes.

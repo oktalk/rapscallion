@@ -1,8 +1,6 @@
-import { decks } from "../decks";
-
 export const EndGameScene = ({
   backToIntro,
-  resetDungeon,
+  startGame,
   gameVariant,
   gameMode,
   gameState,
@@ -25,7 +23,7 @@ export const EndGameScene = ({
         &nbsp;&nbsp;
         <button
           className='button lined thin'
-          onClick={() => resetDungeon(decks[gameMode], gameMode)}
+          onClick={() => startGame(gameMode)}
         >
           Play again?
         </button>

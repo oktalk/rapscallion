@@ -2,9 +2,8 @@ import Knot from '../images/knot.svg';
 import Queen from '../images/queen.svg';
 import King from '../images/king.svg';
 import Ace from '../images/ace.svg';
-import { decks } from '../decks';
 
-export const IntroScene = ({ gameState, toggleModal, resetDungeon }) => {
+export const IntroScene = ({ gameState, toggleModal, startGame }) => {
   return (
     <div>
       <h1 className='is-size-3'>{gameState}</h1>
@@ -19,7 +18,7 @@ export const IntroScene = ({ gameState, toggleModal, resetDungeon }) => {
         <button
           data-test='start-standard-game'
           className='button lined thin'
-          onClick={() => resetDungeon(decks.standard, 'standard')}
+          onClick={() => startGame('standard')}
         >
           Standard Dungeon
         </button>
@@ -31,7 +30,7 @@ export const IntroScene = ({ gameState, toggleModal, resetDungeon }) => {
             <img src={Queen} alt='Queen of Hearts' width='150' className='img-responsive' data-test='queen' />
             <button
               className='button lined thin'
-              onClick={() => resetDungeon(decks.standard, 'potions')}
+              onClick={() => startGame('potions')}
             >
               Play As Queen of Hearts
             </button>
@@ -45,7 +44,7 @@ export const IntroScene = ({ gameState, toggleModal, resetDungeon }) => {
             <img src={King} alt='King of Hearts' width='150' className='img-responsive' data-test='king' />
             <button
               className='button lined thin'
-              onClick={() => resetDungeon(decks.noshields, 'noshields')}
+              onClick={() => startGame('noshields')}
             >
               Play As King of Hearts
             </button>
@@ -59,7 +58,7 @@ export const IntroScene = ({ gameState, toggleModal, resetDungeon }) => {
             <img src={Ace} alt='Ace of Hearts' width='150' className='img-responsive' data-test='ace' />
             <button
               className='button lined thin'
-              onClick={() => resetDungeon(decks.nohearts, 'nohearts')}
+              onClick={() => startGame('nohearts')}
             >
               Play As Ace of Hearts
             </button>
