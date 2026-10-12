@@ -59,8 +59,8 @@ class App extends Component {
       roomComplete: false,
       retreat: true,
       isRoomComplete: false,
-      gameState: dungeon.length === 0 ? 'You won!' : '',
-      gameScene: dungeon.length === 0 ? 'endGame' : prevState.gameScene,
+      gameState: (prevState.gameState === 'Game over' || prevState.hp <= 0) ? 'Game over' : (dungeon.length === 0 ? 'You won!' : ''),
+      gameScene: (prevState.gameState === 'Game over' || prevState.hp <= 0) ? 'endGame' : (dungeon.length === 0 ? 'endGame' : prevState.gameScene),
     }));
   };
 
