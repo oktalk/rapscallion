@@ -122,7 +122,7 @@ class Card extends Component {
 
   render() {
     const { suit, number, centerPip, onClick, hasShieldRank, shieldRank } = this.props;
-    const divStyle = { backgroundImage: `url(${centerPip})` };
+    const divStyle = { backgroundImage: `url("${centerPip}")` };
     return (
       <div data-test="card" className={`card ${this.suitColor()}`} onClick={onClick}>
         {hasShieldRank && <p className="card-rank">rank: <span className="text-black">{shieldRank}</span></p>}
