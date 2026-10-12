@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import './Card.css';
 
 class Card extends Component {
@@ -8,6 +9,8 @@ class Card extends Component {
     number: PropTypes.number.isRequired,
     centerPip: PropTypes.string.isRequired,
     onClick: PropTypes.func,
+    onAnimationEnd: PropTypes.func,
+    className: PropTypes.string,
     hasShieldRank: PropTypes.bool,
     shieldRank: PropTypes.number
   };
@@ -121,10 +124,15 @@ class Card extends Component {
   };
 
   render() {
-    const { suit, number, centerPip, onClick, hasShieldRank, shieldRank } = this.props;
+    const { suit, number, centerPip, onClick, onAnimationEnd, className, hasShieldRank, shieldRank } = this.props;
     const divStyle = { backgroundImage: `url("${centerPip}")` };
     return (
-      <div data-test="card" className={`card ${this.suitColor()}`} onClick={onClick}>
+      <div
+        data-test="card"
+        className={classnames('card', this.suitColor(), className)}
+        onClick={onClick}
+        onAnimationEnd={onAnimationEnd}
+      >
         {hasShieldRank && <p className="card-rank">rank: <span className="text-black">{shieldRank}</span></p>}
         <div className="corner top left">
           <h1>{['clubs', 'spades', 'jack', 'joker'].includes(suit) ? '-' : ''}{number}</h1>

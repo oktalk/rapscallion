@@ -1,6 +1,8 @@
 import { Fragment } from 'react';
 import Room from './Room';
 import PlayerShield from './PlayerShield';
+import HitPoints from './HitPoints';
+import './Animations.css';
 
 export const RoomScene = ({
   initialState,
@@ -56,7 +58,7 @@ export const RoomScene = ({
       )}
       <div className='App-stats'>
         <p className='text-white'>
-          HP: {initialState.hp} • Shield: {initialState.shield}/
+          <HitPoints hp={initialState.hp} /> • Shield: {initialState.shield}/
           {initialState.shieldRank}
         </p>
         <small>
@@ -71,6 +73,7 @@ export const RoomScene = ({
         <div className='App-shield'>
           {initialState.shield > 0 && (
             <PlayerShield
+              key={initialState.shield}
               shield={initialState.shield}
               shieldRank={initialState.shieldRank}
             />

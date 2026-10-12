@@ -53,7 +53,9 @@ describe('playing a standard game', () => {
     expect(screen.getByText('Run')).toBeEnabled();
     expect(screen.getByText('Next Room')).toBeDisabled();
 
-    fireEvent.click(cardLabels()[0]);
+    const enemy = cardLabels()[0].closest('[data-test="card"]');
+    fireEvent.click(enemy);
+    fireEvent.animationEnd(enemy);
 
     expect(cardLabels()).toHaveLength(3);
     expect(screen.getByText(/HP: 10/)).toBeInTheDocument();
