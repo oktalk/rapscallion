@@ -40,7 +40,7 @@ export const RoomScene = ({
             }%`,
           }}
         >
-          {`${Math.ceil(((48 - initialState.progress) / 48) * 100)}% Complete`}
+          {`${Math.ceil(((initialState.dungeonSize - initialState.progress) / initialState.dungeonSize) * 100)}% Complete`}
         </span>
       </div>
       <span data-test='progress label'>Progress: {initialState.progress}</span>
