@@ -7,9 +7,18 @@ import {
   saveRun,
   loadRun,
   clearRun,
+  checksum,
 } from './save';
 
 const card = (suit, number) => ({ suit, number });
+
+// Builds a save with a valid checksum around any data, so tests can reach the
+// field and rule checks with values serializeRun would never write.
+const sign = (data) => {
+  const run = JSON.stringify(data);
+  return JSON.stringify({ run, sum: checksum(run) });
+};
+const savedFields = (json) => JSON.parse(JSON.parse(json).run);
 
 const midRun = {
   ...initialGameState,
@@ -79,7 +88,7 @@ describe('serializeRun / parseSavedRun', () => {
   });
 
   test('UI-only state is not saved', () => {
-    const saved = JSON.parse(serializeRun(midRun));
+    const saved = savedFields(serializeRun(midRun));
 
     expect(saved).not.toHaveProperty('modal');
     expect(saved).not.toHaveProperty('shieldImpact');
@@ -93,7 +102,7 @@ describe('serializeRun / parseSavedRun', () => {
   });
 
   test('extra unknown fields in a save are dropped', () => {
-    const json = JSON.stringify({ ...JSON.parse(serializeRun(midRun)), cheat: 99 });
+    const json = sign({ ...savedFields(serializeRun(midRun)), cheat: 99 });
     expect(parseSavedRun(json)).not.toHaveProperty('cheat');
   });
 
@@ -106,8 +115,7 @@ describe('serializeRun / parseSavedRun', () => {
     expect(parseSavedRun(json)).toBeNull();
   });
 
-  const savedWith = (overrides) =>
-    JSON.stringify({ ...JSON.parse(serializeRun(midRun)), ...overrides });
+  const savedWith = (overrides) => sign({ ...savedFields(serializeRun(midRun)), ...overrides });
 
   test.each([
     ['a missing hp', { hp: undefined }],
@@ -122,6 +130,47 @@ describe('serializeRun / parseSavedRun', () => {
     ['an unknown game mode', { gameMode: 'cheater' }],
   ])('rejects a save with %s', (_label, overrides) => {
     expect(parseSavedRun(savedWith(overrides))).toBeNull();
+  });
+});
+
+describe('save checksum', () => {
+  test('a save stores the run alongside its checksum', () => {
+    const save = JSON.parse(serializeRun(midRun));
+
+    expect(Object.keys(save).sort()).toEqual(['run', 'sum']);
+    expect(save.sum).toBe(checksum(save.run));
+  });
+
+  test('a run edited by hand no longer matches its checksum', () => {
+    const save = JSON.parse(serializeRun(midRun));
+    const edited = save.run.replace('"hp":13', '"hp":21');
+    expect(edited).not.toBe(save.run);
+
+    expect(parseSavedRun(JSON.stringify({ ...save, run: edited }))).toBeNull();
+  });
+
+  test('a changed checksum is rejected', () => {
+    const save = JSON.parse(serializeRun(midRun));
+    expect(parseSavedRun(JSON.stringify({ ...save, sum: '0' }))).toBeNull();
+  });
+
+  test.each([
+    ['a save with no checksum', (save) => ({ run: save.run })],
+    ['a save whose run is an object', (save) => ({ ...save, run: JSON.parse(save.run) })],
+    ['an unsigned run in the old format', (save) => JSON.parse(save.run)],
+  ])('rejects %s', (_label, reshape) => {
+    const save = JSON.parse(serializeRun(midRun));
+    expect(parseSavedRun(JSON.stringify(reshape(save)))).toBeNull();
+  });
+
+  test('a signed run that is not a JSON object is rejected', () => {
+    expect(parseSavedRun(JSON.stringify({ run: '42', sum: checksum('42') }))).toBeNull();
+    expect(parseSavedRun(JSON.stringify({ run: '{oops', sum: checksum('{oops') }))).toBeNull();
+  });
+
+  test('the checksum is deterministic and sensitive to every character', () => {
+    expect(checksum('abc')).toBe(checksum('abc'));
+    expect(checksum('abc')).not.toBe(checksum('abd'));
   });
 });
 

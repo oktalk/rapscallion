@@ -79,16 +79,50 @@ const isPlausibleRun = (run) => {
 const pickSavedFields = (source) =>
   Object.fromEntries(Object.keys(SAVED_FIELDS).map((key) => [key, source[key]]));
 
-export const serializeRun = (state) => JSON.stringify(pickSavedFields(state));
+// cyrb53 by bryc (public domain): a fast, synchronous 53-bit string hash.
+// https://github.com/bryc/code/blob/master/jshash/experimental/cyrb53.js
+const cyrb53 = (text) => {
+  let h1 = 0xdeadbeef;
+  let h2 = 0x41c6ce57;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761);
+    h2 = Math.imul(h2 ^ ch, 1597334677);
+  }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507);
+  h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507);
+  h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
+};
 
-export const parseSavedRun = (json) => {
-  let data;
+// The checksum makes a hand-edited save fail to load. The salt ships in the
+// bundle, so anyone who reads the code can still forge one; it stops casual
+// edits in DevTools, which is all a game without a server can do.
+const CHECKSUM_SALT = 'rapscallion:v1';
+export const checksum = (text) => cyrb53(`${CHECKSUM_SALT}:${text}`);
+
+const parseJsonObject = (json) => {
   try {
-    data = JSON.parse(json);
+    const data = JSON.parse(json);
+    return data !== null && typeof data === 'object' ? data : null;
   } catch {
     return null;
   }
-  if (data === null || typeof data !== 'object') return null;
+};
+
+// A save is { run, sum }: the run's JSON as a string, plus its checksum.
+export const serializeRun = (state) => {
+  const run = JSON.stringify(pickSavedFields(state));
+  return JSON.stringify({ run, sum: checksum(run) });
+};
+
+export const parseSavedRun = (json) => {
+  const save = parseJsonObject(json);
+  if (!save || !isString(save.run) || save.sum !== checksum(save.run)) return null;
+
+  const data = parseJsonObject(save.run);
+  if (!data) return null;
 
   const valid = Object.entries(SAVED_FIELDS).every(([key, check]) => check(data[key]));
   if (!valid || !isPlausibleRun(data)) return null;
