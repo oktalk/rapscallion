@@ -3,7 +3,7 @@ import Queen from '../images/queen.svg';
 import King from '../images/king.svg';
 import Ace from '../images/ace.svg';
 
-export const IntroScene = ({ gameState, toggleModal, startGame }) => {
+export const IntroScene = ({ gameState, toggleModal, startGame, canContinue, continueGame }) => {
   return (
     <div>
       <h1 className='is-size-3'>{gameState}</h1>
@@ -14,6 +14,17 @@ export const IntroScene = ({ gameState, toggleModal, startGame }) => {
         </button>
       </p>
       <img src={Knot} alt='' className='knot' />
+      {canContinue && (
+        <p className='mb3'>
+          <button
+            data-testid='continue-game'
+            className='button lined thin'
+            onClick={continueGame}
+          >
+            Continue
+          </button>
+        </p>
+      )}
       <p className='mb3'>
         <button
           data-test='start-standard-game'
