@@ -120,6 +120,7 @@ src/
 │   ├── deck.js              # Shuffle and room drawing
 │   ├── variants.js          # One entry per game mode / character
 │   ├── dungeon.js           # newGame, run, nextRoom, deal, playCard
+│   ├── save.js              # Save, validate, and restore a run in localStorage
 │   ├── index.js             # Public API re-exports
 │   └── effects/             # Enemy, potion, and shield card effects
 └── components/
