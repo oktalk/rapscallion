@@ -1,4 +1,5 @@
-import { initialGameState } from './dungeon';
+import { initialGameState, newGame, run, nextRoom, playCard } from './dungeon';
+import { VARIANTS } from './variants';
 import {
   SAVE_KEY,
   serializeRun,
@@ -14,7 +15,7 @@ const midRun = {
   ...initialGameState,
   dungeon: [card('clubs', 4), card('hearts', 9)],
   dungeonSize: 48,
-  room: [card('spades', 7), card('diamonds', 5)],
+  room: [card('spades', 7), card('diamonds', 3)],
   hp: 13,
   xp: 8,
   shield: 5,
@@ -121,6 +122,104 @@ describe('serializeRun / parseSavedRun', () => {
     ['an unknown game mode', { gameMode: 'cheater' }],
   ])('rejects a save with %s', (_label, overrides) => {
     expect(parseSavedRun(savedWith(overrides))).toBeNull();
+  });
+});
+
+describe('parseSavedRun rejects saves the game rules could not produce', () => {
+  // A legal opening for any mode: six cards left in the dungeon, four in the room.
+  const runFor = (mode, overrides = {}) => {
+    const { deck, description, regenerate, potionLimit, breakableShield, startingShield } =
+      VARIANTS[mode];
+    return {
+      ...initialGameState,
+      dungeon: deck.slice(0, 6),
+      room: deck.slice(6, 10),
+      dungeonSize: deck.length,
+      progress: 6,
+      regenerate,
+      potionLimit,
+      breakableShield,
+      shield: startingShield,
+      gameVariant: description,
+      gameMode: mode,
+      ...overrides,
+    };
+  };
+  const parse = (run) => parseSavedRun(serializeRun(run));
+
+  test.each(Object.keys(VARIANTS))('accepts a legal %s run', (mode) => {
+    expect(parse(runFor(mode))).not.toBeNull();
+  });
+
+  // Guards against a check that is too strict, which would silently throw
+  // away a real player's save. Plays seeded random games the way the UI
+  // allows (Run when enabled, Next Room when the room is complete).
+  test('accepts every room reached in real play', () => {
+    let seed = 42;
+    const random = () => {
+      seed = (seed * 16807) % 2147483647;
+      return (seed - 1) / 2147483646;
+    };
+
+    for (const mode of Object.keys(VARIANTS)) {
+      for (let game = 0; game < 50; game++) {
+        let state = newGame(initialGameState, mode, random);
+        while (state.gameScene === 'room') {
+          expect(parse(state), JSON.stringify(state)).not.toBeNull();
+          if (state.retreat && random() < 0.2) {
+            state = run(state, random);
+          } else if (state.isRoomComplete && random() < 0.5) {
+            state = nextRoom(state, random);
+          } else {
+            state = playCard(state, state.room[Math.floor(random() * state.room.length)]);
+          }
+        }
+      }
+    }
+  });
+
+  test('accepts a shield equipped from a diamond that has been played', () => {
+    expect(parse(midRun)).not.toBeNull();
+  });
+
+  test.each([
+    ['a card that is not in any deck', { room: [card('hearts', 21)] }],
+    ['the same card twice', { dungeon: [card('spades', 7)], progress: 1 }],
+    ['more cards in the room than a room holds', {
+      dungeon: [],
+      progress: 0,
+      room: [card('spades', 2), card('spades', 3), card('spades', 4), card('spades', 5), card('spades', 6)],
+    }],
+    ['a dungeon size that does not match the deck', { dungeonSize: 40 }],
+    ['progress that does not match the dungeon', { progress: 30 }],
+    ['a variant label from another mode', { gameVariant: 'No potion limit' }],
+    ['regeneration in a mode without it', { regenerate: 3 }],
+    ['no potion limit in a mode that has one', { potionLimit: false }],
+    ['an unbreakable shield in a mode without one', { breakableShield: false }],
+    ['a shield whose diamond is still in the room', { shield: 3 }],
+    ['a shield stronger than any diamond', { shield: 12 }],
+    ['a shield rank above the strongest enemy', { shieldRank: 22 }],
+    ['a shield rank with no shield', { shield: 0, shieldRank: 4 }],
+    ['negative xp', { xp: -5 }],
+    ['fractional hp', { hp: 12.5 }],
+  ])('rejects %s', (_label, overrides) => {
+    expect(parse({ ...midRun, ...overrides })).toBeNull();
+  });
+
+  test("rejects a card from another mode's deck", () => {
+    const [, ...rest] = VARIANTS.nohearts.deck.slice(6, 10);
+    expect(parse(runFor('nohearts', { room: [card('hearts', 5), ...rest] }))).toBeNull();
+  });
+
+  test('rejects a used potion in a mode with no potion limit', () => {
+    expect(parse(runFor('potions', { potionDrank: true }))).toBeNull();
+  });
+
+  test.each([
+    ['a different shield value', { shield: 9 }],
+    ['a shield rank', { shieldRank: 5 }],
+  ])("rejects the King of Hearts' unbreakable shield with %s", (_label, overrides) => {
+    expect(parse(runFor('noshields', overrides))).toBeNull();
   });
 });
 
