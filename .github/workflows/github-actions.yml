@@ -49,7 +49,7 @@ jobs:
       # Installs dependencies with npm ci (caching the Cypress binary),
       # starts the dev server, waits for it, then runs `cypress run`.
       - name: Run Cypress
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           start: npm start
           wait-on: http://localhost:3000
