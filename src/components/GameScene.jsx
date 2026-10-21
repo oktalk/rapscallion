@@ -11,6 +11,7 @@ export const GameScene = ({
   nextRoom,
   toggleModal,
   startGame,
+  continueGame,
 }) => {
   switch (initialState.gameScene) {
     case 'room':
@@ -40,6 +41,8 @@ export const GameScene = ({
           gameState={initialState.gameState}
           toggleModal={toggleModal}
           startGame={startGame}
+          canContinue={Boolean(initialState.savedRun)}
+          continueGame={continueGame}
         />
       );
   }

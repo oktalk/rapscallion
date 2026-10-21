@@ -45,4 +45,32 @@ describe('template spec', () => {
       cy.get('[data-testid="how-to-play-button"]').contains('How To Play');
     });
   });
+
+  context('Resuming a run after a refresh', () => {
+    it('shows Continue after a reload and restores the room', () => {
+      cy.get('[data-testid="continue-game"]').should('not.exist');
+      cy.get('[data-test="start-standard-game"]').click();
+      cy.get('[data-test="progress label"]').contains('Progress: 44');
+
+      cy.get('[data-test="card"] .corner > h1').then(($corners) => {
+        const before = [...$corners].map((el) => el.textContent);
+
+        cy.reload();
+        cy.get('[data-testid="continue-game"]').click();
+
+        cy.get('[data-test="progress label"]').contains('Progress: 44');
+        cy.get('[data-test="card"] .corner > h1').should(($after) => {
+          expect([...$after].map((el) => el.textContent)).to.deep.equal(before);
+        });
+      });
+    });
+
+    it('End game clears the save', () => {
+      cy.get('[data-test="start-standard-game"]').click();
+      cy.get('[data-testid="end-game"]').click();
+
+      cy.reload();
+      cy.get('[data-testid="continue-game"]').should('not.exist');
+    });
+  });
 })

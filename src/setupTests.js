@@ -9,3 +9,9 @@ import '@testing-library/jest-dom/vitest';
 if (typeof window.AnimationEvent === 'undefined') {
   window.AnimationEvent = class AnimationEvent extends Event {};
 }
+
+// Starting a game saves it to localStorage. Clear it so one test's run
+// does not show up as a "Continue" button in the next test.
+afterEach(() => {
+  window.localStorage.clear();
+});

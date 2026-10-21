@@ -9,6 +9,21 @@ class App extends Component {
     ...game.initialGameState,
     modal: false,
     shieldImpact: null,
+    savedRun: game.loadRun(),
+  };
+
+  // Keep the save in step with the run: write it while a room is in play,
+  // and drop it once the game is won or lost.
+  componentDidUpdate() {
+    if (this.state.gameScene === 'room') {
+      game.saveRun(this.state);
+    } else if (this.state.gameScene === 'endGame') {
+      game.clearRun();
+    }
+  }
+
+  continueGame = () => {
+    this.setState((prevState) => ({ ...prevState.savedRun, savedRun: null }));
   };
 
   startGame = (mode) => {
@@ -41,7 +56,8 @@ class App extends Component {
   };
 
   backToIntro = () => {
-    this.setState({ gameScene: 'intro' });
+    game.clearRun();
+    this.setState({ gameScene: 'intro', savedRun: null });
   };
 
   toggleModal = () => {
@@ -65,6 +81,7 @@ class App extends Component {
           nextRoom={this.nextRoom}
           toggleModal={this.toggleModal}
           startGame={this.startGame}
+          continueGame={this.continueGame}
         />
 
         {this.state.modal && (

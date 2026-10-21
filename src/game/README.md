@@ -14,6 +14,7 @@ All game rules live here as pure functions with the shape
 | `variants.js` | One entry per game mode / character |
 | `effects/` | One file per card type, plus `index.js` to route a card to its effect |
 | `dungeon.js` | Room flow: `newGame`, `run`, `nextRoom`, `deal`, `playCard` |
+| `save.js` | Save and restore a run: pure `serializeRun` / `parseSavedRun` (the first signs each save with a checksum; the second rejects saves that were edited or that the game rules could not produce) plus thin `localStorage` wrappers (`saveRun`, `loadRun`, `clearRun`) |
 | `index.js` | Public API: re-exports what components need |
 
 ## Rules for this folder
