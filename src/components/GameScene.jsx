@@ -40,7 +40,6 @@ export const GameScene = ({
     default:
       return (
         <IntroScene
-          gameState={initialState.gameState}
           toggleModal={toggleModal}
           startGame={startGame}
           canContinue={Boolean(initialState.savedRun)}

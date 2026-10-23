@@ -43,9 +43,9 @@ describe('newGame', () => {
     });
   });
 
-  it('KNOWN BUG #5 (possibly intended): carries over the previous gameState message', () => {
+  it('clears the previous gameState message', () => {
     const finished = state({ gameState: 'Game over' });
-    expect(newGame(finished, 'standard', noShuffle).gameState).toBe('Game over');
+    expect(newGame(finished, 'standard', noShuffle).gameState).toBe('');
   });
 
   it('King of Hearts starts with a 7 shield and cannot run', () => {

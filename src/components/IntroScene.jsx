@@ -3,10 +3,9 @@ import Queen from '../images/queen.svg';
 import King from '../images/king.svg';
 import Ace from '../images/ace.svg';
 
-export const IntroScene = ({ gameState, toggleModal, startGame, canContinue, continueGame }) => {
+export const IntroScene = ({ toggleModal, startGame, canContinue, continueGame }) => {
   return (
     <div>
-      <h1 className='is-size-3'>{gameState}</h1>
       <br />
       <p>
         <button data-testid='how-to-play-button' className='button lined thin' onClick={toggleModal}>

@@ -220,6 +220,32 @@ describe('saving and resuming a run', () => {
     expect(screen.getByTestId('stat-cards')).toHaveTextContent('48 / 48');
   });
 
+  test('a win does not follow the player back to the title screen', () => {
+    seedRun({ hp: 10, dungeon: [], room: [card('hearts', 3)] });
+    render(<App />);
+    fireEvent.click(screen.getByTestId('continue-game'));
+    playFirstCard('Potion');
+
+    fireEvent.click(screen.getByText('Back to Title Screen'));
+    expect(screen.queryByText('You won!')).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByText(/Standard Dungeon/i));
+    fireEvent.click(screen.getByTestId('end-game'));
+    expect(screen.queryByText('You won!')).not.toBeInTheDocument();
+  });
+
+  test('a loss does not follow the player into the next game', () => {
+    seedRun({ hp: 5, room: [card('spades', 14), card('hearts', 3)] });
+    render(<App />);
+    fireEvent.click(screen.getByTestId('continue-game'));
+    playFirstCard('Demon');
+
+    fireEvent.click(screen.getByText('Play again?'));
+    fireEvent.click(screen.getByTestId('end-game'));
+
+    expect(screen.queryByText('Game over')).not.toBeInTheDocument();
+  });
+
   test('a corrupted save is discarded and the title screen loads normally', () => {
     window.localStorage.setItem(game.SAVE_KEY, '{oops');
 

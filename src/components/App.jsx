@@ -57,7 +57,7 @@ class App extends Component {
 
   backToIntro = () => {
     game.clearRun();
-    this.setState({ gameScene: 'intro', savedRun: null });
+    this.setState({ gameScene: 'intro', gameState: '', savedRun: null });
   };
 
   toggleModal = () => {

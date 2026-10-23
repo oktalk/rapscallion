@@ -58,6 +58,7 @@ export const newGame = (state, mode, random = Math.random) => {
     retreat: variant.breakableShield,
     roomsEntered: 1,
     timesRun: 0,
+    gameState: '',
     gameVariant: variant.description,
     gameScene: 'room',
     gameMode: mode,

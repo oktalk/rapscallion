@@ -6,7 +6,6 @@ describe('IntroScene', () => {
     const continueGame = vi.fn();
     render(
       <IntroScene
-        gameState=''
         toggleModal={() => {}}
         startGame={() => {}}
         continueGame={continueGame}
