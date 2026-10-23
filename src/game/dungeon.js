@@ -1,4 +1,4 @@
-import { MAX_HP } from './constants';
+import { MAX_HP, ROOM_SIZE } from './constants';
 import { shuffleCards, drawRoom, isSameCard } from './deck';
 import { getVariant } from './variants';
 import { applyCardEffect } from './effects';
@@ -26,8 +26,7 @@ export const initialGameState = {
   gameMode: 'standard',
 };
 
-const enterNewRoom = (state, cards, random) => {
-  const { dungeon, room } = drawRoom(shuffleCards(cards, random));
+const enterNewRoom = (state, { dungeon, room }) => {
   const won = room.length === 0;
   return {
     ...state,
@@ -46,7 +45,7 @@ const enterNewRoom = (state, cards, random) => {
 export const newGame = (state, mode, random = Math.random) => {
   const variant = getVariant(mode);
   return {
-    ...enterNewRoom(state, variant.deck, random),
+    ...enterNewRoom(state, drawRoom(shuffleCards(variant.deck, random))),
     dungeonSize: variant.deck.length,
     regenerate: variant.regenerate,
     potionLimit: variant.potionLimit,
@@ -65,14 +64,24 @@ export const newGame = (state, mode, random = Math.random) => {
   };
 };
 
-export const run = (state, random = Math.random) => ({
-  ...enterNewRoom(state, [...state.dungeon, ...state.room], random),
+// As in Scoundrel, the deck is shuffled once per game. Running puts the room on
+// the bottom of the dungeon (the start of the array; rooms are drawn from the
+// end), so the cards you fled from come back only after the rest are drawn.
+export const run = (state) => ({
+  ...enterNewRoom(state, drawRoom([...state.room, ...state.dungeon])),
   retreat: !state.retreat,
   timesRun: state.timesRun + 1,
 });
 
-export const nextRoom = (state, random = Math.random) => ({
-  ...enterNewRoom(state, [...state.dungeon, ...state.room], random),
+// As in Scoundrel, the card left in a finished room stays and becomes part of
+// the next room, which is filled up from the top of the dungeon.
+const fillRoom = ({ dungeon, room }) => {
+  const split = Math.max(dungeon.length - (ROOM_SIZE - room.length), 0);
+  return { dungeon: dungeon.slice(0, split), room: [...room, ...dungeon.slice(split)] };
+};
+
+export const nextRoom = (state) => ({
+  ...enterNewRoom(state, fillRoom(state)),
   retreat: state.breakableShield,
 });
 

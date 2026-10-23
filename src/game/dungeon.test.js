@@ -78,11 +78,11 @@ describe('newGame', () => {
 });
 
 describe('run', () => {
-  it('reshuffles the room into the dungeon, deals a new room, and uses up the retreat', () => {
-    const next = run(state({ dungeon: s, room: c, retreat: true, hp: 10 }), noShuffle);
+  it('puts the room on the bottom of the dungeon, deals from the top, and uses up the retreat', () => {
+    const next = run(state({ dungeon: s, room: c, retreat: true, hp: 10 }));
     expect(next).toMatchObject({
-      dungeon: s,
-      room: c,
+      dungeon: [...c, s[0]],
+      room: [s[1], s[2], s[3], s[4]],
       progress: 5,
       retreat: false,
       potionDrank: false,
@@ -92,17 +92,44 @@ describe('run', () => {
   });
 
   it('applies regeneration', () => {
-    expect(run(state({ dungeon: s, room: c, hp: 10, regenerate: 3 }), noShuffle).hp).toBe(13);
+    expect(run(state({ dungeon: s, room: c, hp: 10, regenerate: 3 })).hp).toBe(13);
   });
 
-  it('shuffles dungeon then room in that order', () => {
-    const next = run(state({ dungeon: s, room: [c[0]] }), noShuffle);
-    expect(next.room).toEqual([s[2], s[3], s[4], c[0]]);
-    expect(next.dungeon).toEqual([s[0], s[1]]);
+  it('does not shuffle', () => {
+    const random = vi.fn(() => 0);
+    run(state({ dungeon: s, room: c }), random);
+    expect(random).not.toHaveBeenCalled();
+  });
+
+  it('keeps the order of the room it puts on the bottom', () => {
+    const room = [c[3], c[0], c[2], c[1]];
+    expect(run(state({ dungeon: s, room })).dungeon).toEqual([...room, s[0]]);
+  });
+
+  it('fills the next room from the fled cards when the dungeon has fewer than four left', () => {
+    const next = run(state({ dungeon: [s[0], s[1]], room: c }));
+    expect(next).toMatchObject({
+      room: [c[2], c[3], s[0], s[1]],
+      dungeon: [c[0], c[1]],
+      progress: 2,
+    });
+  });
+
+  it('brings the fled cards back only after the rest of the dungeon is drawn', () => {
+    const fled = [2, 3, 4, 5].map((n) => card('hearts', n));
+    const dungeon = [...s, c[0], c[1], c[2]];
+
+    const afterRun = run(state({ dungeon, room: fled }));
+    expect(afterRun.room).toEqual(dungeon.slice(-4));
+
+    const secondRoom = deal({ ...afterRun, room: [] });
+    expect(secondRoom.room).toEqual(dungeon.slice(0, 4));
+
+    expect(deal({ ...secondRoom, room: [] }).room).toEqual(fled);
   });
 
   it('declares victory when no cards remain', () => {
-    expect(run(state({ dungeon: [], room: [] }), noShuffle)).toMatchObject({
+    expect(run(state({ dungeon: [], room: [] }))).toMatchObject({
       gameState: 'You won!',
       gameScene: 'endGame',
     });
@@ -117,18 +144,34 @@ describe('run', () => {
 });
 
 describe('nextRoom', () => {
-  it('shuffles the leftover card back in and allows a retreat', () => {
-    const next = nextRoom(state({ dungeon: s, room: [c[0]], breakableShield: true }), noShuffle);
+  it('keeps the leftover card, fills the room from the top, and allows a retreat', () => {
+    const next = nextRoom(state({ dungeon: s, room: [c[0]], breakableShield: true }));
     expect(next).toMatchObject({
-      room: [s[2], s[3], s[4], c[0]],
+      room: [c[0], s[2], s[3], s[4]],
       dungeon: [s[0], s[1]],
       progress: 2,
       retreat: true,
     });
   });
 
+  it('does not shuffle', () => {
+    const random = vi.fn(() => 0);
+    nextRoom(state({ dungeon: s, room: [c[0]] }), random);
+    expect(random).not.toHaveBeenCalled();
+  });
+
+  it('keeps the leftover card when the dungeon is empty', () => {
+    const next = nextRoom(state({ dungeon: [], room: [c[0]] }));
+    expect(next).toMatchObject({ room: [c[0]], dungeon: [], gameScene: 'room', gameState: '' });
+  });
+
+  it('makes a smaller final room when the dungeon runs low', () => {
+    const next = nextRoom(state({ dungeon: [s[0]], room: [c[0]] }));
+    expect(next).toMatchObject({ room: [c[0], s[0]], dungeon: [], progress: 0, gameScene: 'room' });
+  });
+
   it('does not allow a retreat with an unbreakable shield', () => {
-    const next = nextRoom(state({ dungeon: s, room: [c[0]], breakableShield: false }), noShuffle);
+    const next = nextRoom(state({ dungeon: s, room: [c[0]], breakableShield: false }));
     expect(next.retreat).toBe(false);
   });
 });
@@ -252,12 +295,12 @@ describe('run stats counters', () => {
   });
 
   it('run counts a run and the room it leads to', () => {
-    const next = run(state({ dungeon: s, room: c, roomsEntered: 2, timesRun: 1 }), noShuffle);
+    const next = run(state({ dungeon: s, room: c, roomsEntered: 2, timesRun: 1 }));
     expect(next).toMatchObject({ roomsEntered: 3, timesRun: 2 });
   });
 
   it('nextRoom counts the new room but not a run', () => {
-    const next = nextRoom(state({ dungeon: s, room: [c[0]], roomsEntered: 2, timesRun: 1 }), noShuffle);
+    const next = nextRoom(state({ dungeon: s, room: [c[0]], roomsEntered: 2, timesRun: 1 }));
     expect(next).toMatchObject({ roomsEntered: 3, timesRun: 1 });
   });
 
@@ -268,9 +311,7 @@ describe('run stats counters', () => {
 
   it('reaching the empty winning room does not count as a room', () => {
     expect(deal(state({ dungeon: [], room: [], roomsEntered: 4 })).roomsEntered).toBe(4);
-    expect(nextRoom(state({ dungeon: [], room: [], roomsEntered: 4 }), noShuffle).roomsEntered).toBe(
-      4
-    );
+    expect(nextRoom(state({ dungeon: [], room: [], roomsEntered: 4 })).roomsEntered).toBe(4);
   });
 });
 

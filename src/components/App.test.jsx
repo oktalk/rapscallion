@@ -64,7 +64,7 @@ describe('playing a standard game', () => {
     expect(screen.getByText('Run')).toBeDisabled();
   });
 
-  test('running reshuffles the room back into the dungeon and disables Run', () => {
+  test('running deals a new room and disables Run', () => {
     render(<App />);
     fireEvent.click(screen.getByText(/Standard Dungeon/i));
 
@@ -244,6 +244,43 @@ describe('saving and resuming a run', () => {
     fireEvent.click(screen.getByTestId('end-game'));
 
     expect(screen.queryByText('Game over')).not.toBeInTheDocument();
+  });
+
+  const roomCorners = () =>
+    [...document.querySelectorAll('[data-test="card"] .corner > h1')].map((h1) => h1.textContent);
+
+  test('Next Room keeps the leftover card and fills the room from the dungeon', () => {
+    seedRun({
+      hp: 15,
+      dungeon: [card('spades', 2), card('spades', 3), card('spades', 4), card('spades', 5)],
+      progress: 4,
+      room: [card('hearts', 3), card('clubs', 6)],
+    });
+    render(<App />);
+    fireEvent.click(screen.getByTestId('continue-game'));
+    playFirstCard('Potion');
+
+    fireEvent.click(screen.getByText('Next Room'));
+
+    expect(roomCorners()).toEqual(['-6', '-3', '-4', '-5']);
+    expect(screen.getByText('Progress: 1')).toBeInTheDocument();
+  });
+
+  test('Run puts the room on the bottom so the same cards do not come straight back', () => {
+    seedRun({
+      dungeon: [card('spades', 2), card('spades', 3), card('spades', 4), card('spades', 5)],
+      progress: 4,
+      room: [card('clubs', 10), card('clubs', 11), card('clubs', 12), card('clubs', 13)],
+      retreat: true,
+    });
+    render(<App />);
+    fireEvent.click(screen.getByTestId('continue-game'));
+
+    fireEvent.click(screen.getByText('Run'));
+
+    expect(roomCorners()).toEqual(['-2', '-3', '-4', '-5']);
+    expect(screen.getByText('Progress: 4')).toBeInTheDocument();
+    expect(screen.getByText('Run')).toBeDisabled();
   });
 
   test('a corrupted save is discarded and the title screen loads normally', () => {
