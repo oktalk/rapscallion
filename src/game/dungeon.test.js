@@ -154,9 +154,20 @@ describe('deal', () => {
     expect(dungeon).toEqual(s);
   });
 
-  it('KNOWN BUG #2: declares victory before the final room is played', () => {
+  it('deals the final room instead of declaring victory', () => {
     const next = deal(state({ dungeon: c, room: [] }));
-    expect(next).toMatchObject({ room: c, gameState: 'You won!', gameScene: 'endGame' });
+    expect(next).toMatchObject({
+      dungeon: [],
+      room: c,
+      progress: 0,
+      gameState: '',
+      gameScene: 'room',
+    });
+  });
+
+  it('declares victory once the final room is cleared', () => {
+    const next = deal(state({ dungeon: [], room: [] }));
+    expect(next).toMatchObject({ room: [], gameState: 'You won!', gameScene: 'endGame' });
   });
 });
 

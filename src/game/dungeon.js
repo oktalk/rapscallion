@@ -71,7 +71,7 @@ export const nextRoom = (state, random = Math.random) => ({
 
 export const deal = (state) => {
   const { dungeon, room } = drawRoom(state.dungeon);
-  const won = dungeon.length === 0;
+  const won = room.length === 0;
   return {
     ...state,
     dungeon,
