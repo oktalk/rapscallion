@@ -113,6 +113,52 @@ class App extends Component {
                   Attacking an enemy with a higher face value than your{' '}
                   <strong>shield</strong> rank will break your shield.{' '}
                 </p>
+                <p className='has-text-weight-bold' style={{ marginTop: '1em' }}>
+                  The standard deck (48 cards):
+                </p>
+                <table className='table is-fullwidth is-narrow is-striped'>
+                  <thead>
+                    <tr>
+                      <th>Cards</th>
+                      <th>Role</th>
+                      <th className='has-text-right'>Count</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>♠ Spades 2–14 (Ace = 14)</td>
+                      <td>Enemies</td>
+                      <td className='has-text-right'>13</td>
+                    </tr>
+                    <tr>
+                      <td>♣ Clubs 2–14</td>
+                      <td>Enemies</td>
+                      <td className='has-text-right'>13</td>
+                    </tr>
+                    <tr>
+                      <td>♥ Hearts 2–11</td>
+                      <td>Potions</td>
+                      <td className='has-text-right'>10</td>
+                    </tr>
+                    <tr>
+                      <td>♦ Diamonds 2–11</td>
+                      <td>Shields</td>
+                      <td className='has-text-right'>10</td>
+                    </tr>
+                    <tr>
+                      <td>Joker and Jack, worth 21 each</td>
+                      <td>Bosses</td>
+                      <td className='has-text-right'>2</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>Total</th>
+                      <th></th>
+                      <th className='has-text-right'>48</th>
+                    </tr>
+                  </tfoot>
+                </table>
               </section>
               <footer className='modal-card-foot'>
                 <button className='button' onClick={this.toggleModal}>
