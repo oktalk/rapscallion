@@ -18,6 +18,8 @@ export const initialGameState = {
   progress: 52,
   retreat: false,
   isRoomComplete: false,
+  roomsEntered: 0,
+  timesRun: 0,
   gameState: '',
   gameVariant: 'Basic game',
   gameScene: 'intro',
@@ -35,6 +37,7 @@ const enterNewRoom = (state, cards, random) => {
     progress: dungeon.length,
     potionDrank: false,
     isRoomComplete: false,
+    roomsEntered: won ? state.roomsEntered : state.roomsEntered + 1,
     gameState: won ? 'You won!' : state.gameState,
     gameScene: won ? 'endGame' : state.gameScene,
   };
@@ -53,6 +56,8 @@ export const newGame = (state, mode, random = Math.random) => {
     shield: variant.startingShield,
     shieldRank: 0,
     retreat: variant.breakableShield,
+    roomsEntered: 1,
+    timesRun: 0,
     gameVariant: variant.description,
     gameScene: 'room',
     gameMode: mode,
@@ -62,6 +67,7 @@ export const newGame = (state, mode, random = Math.random) => {
 export const run = (state, random = Math.random) => ({
   ...enterNewRoom(state, [...state.dungeon, ...state.room], random),
   retreat: !state.retreat,
+  timesRun: state.timesRun + 1,
 });
 
 export const nextRoom = (state, random = Math.random) => ({
@@ -81,6 +87,7 @@ export const deal = (state) => {
     progress: dungeon.length,
     retreat: true,
     isRoomComplete: false,
+    roomsEntered: won ? state.roomsEntered : state.roomsEntered + 1,
     gameState: won ? 'You won!' : '',
     gameScene: won ? 'endGame' : state.gameScene,
   };
@@ -92,3 +99,15 @@ export const playCard = (state, card) => {
   const next = { ...afterEffect, room, isRoomComplete: room.length <= 1, retreat: false };
   return room.length === 0 && next.gameScene !== 'endGame' ? deal(next) : next;
 };
+
+// The summary shown on the end screen. Cards still in the dungeon or the room
+// were never cleared, and a killing blow can leave HP below zero.
+export const runStats = (state) => ({
+  won: state.gameState === 'You won!',
+  xp: state.xp,
+  hp: Math.max(state.hp, 0),
+  cardsCleared: state.dungeonSize - state.dungeon.length - state.room.length,
+  deckSize: state.dungeonSize,
+  roomsEntered: state.roomsEntered,
+  timesRun: state.timesRun,
+});

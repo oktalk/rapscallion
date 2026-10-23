@@ -1,3 +1,4 @@
+import * as game from '../game';
 import { IntroScene } from './IntroScene';
 import { RoomScene } from './RoomScene';
 import { EndGameScene } from './EndGameScene';
@@ -32,6 +33,7 @@ export const GameScene = ({
           gameMode={initialState.gameMode}
           gameVariant={initialState.gameVariant}
           gameState={initialState.gameState}
+          stats={game.runStats(initialState)}
         />
       );
 

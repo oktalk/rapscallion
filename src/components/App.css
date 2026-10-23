@@ -114,6 +114,27 @@ body {
 
 .text-white {color: #fff;}
 
+/* End game: the result banner is green for a win and red for a loss. */
+.end-game-result {
+  display: inline-block;
+  min-width: 260px;
+  padding: 20px 30px;
+  border: solid 2px #777;
+  border-radius: 6px;
+}
+.end-game-result h1 {margin-bottom: 15px;}
+.end-game-result.is-win {
+  border-color: #43aa8b;
+  box-shadow: 0 0 0 10px rgba(67, 170, 139, .1), 0 10px 30px rgba(67, 170, 139, .5);
+}
+.end-game-result.is-win h1 {color: #43aa8b;}
+.end-game-result.is-loss {
+  border-color: #ED143D;
+  box-shadow: 0 0 0 10px rgba(237, 20, 61, .1), 0 10px 30px rgba(237, 20, 61, .4);
+}
+.end-game-result.is-loss h1 {color: #ED143D;}
+.end-game-stats li {line-height: 1.6;}
+
 .text-black {color: #000;}
 
 .img-responsive {
