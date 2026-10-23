@@ -102,7 +102,7 @@ You start with **21 HP**. Each room deals four cards, and you click a card to re
 
 **Shields and rank.** A shield reduces enemy damage by its value. The first enemy you defeat with a fresh shield sets the shield's **rank** to that enemy's value. From then on, the shield holds only against enemies whose value is equal to or lower than the current rank, and each one lowers the rank further. If you attack an enemy stronger than the rank, the shield absorbs what it can for that fight and then breaks.
 
-**Moving on.** Once a single card remains in the room, **Next Room** becomes available. You can also **Run** to shuffle the whole room back into the dungeon and draw a new one, but you cannot run from two rooms in a row.
+**Moving on.** Once a single card remains in the room, **Next Room** becomes available. The card you left behind stays and becomes part of the next room, which is filled up to four cards from the dungeon. You can also **Run** to put the whole room on the bottom of the dungeon and draw a new one, but you cannot run from two rooms in a row. The deck is shuffled only once, at the start of the game.
 
 Defeating enemies earns XP equal to their value. Clear the entire dungeon to win.
 

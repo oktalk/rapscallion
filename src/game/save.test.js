@@ -223,9 +223,9 @@ describe('parseSavedRun rejects saves the game rules could not produce', () => {
         while (state.gameScene === 'room') {
           expect(parse(state), JSON.stringify(state)).not.toBeNull();
           if (state.retreat && random() < 0.2) {
-            state = run(state, random);
+            state = run(state);
           } else if (state.isRoomComplete && random() < 0.5) {
-            state = nextRoom(state, random);
+            state = nextRoom(state);
           } else {
             state = playCard(state, state.room[Math.floor(random() * state.room.length)]);
           }
