@@ -154,9 +154,20 @@ describe('deal', () => {
     expect(dungeon).toEqual(s);
   });
 
-  it('KNOWN BUG #2: declares victory before the final room is played', () => {
+  it('deals the final room instead of declaring victory', () => {
     const next = deal(state({ dungeon: c, room: [] }));
-    expect(next).toMatchObject({ room: c, gameState: 'You won!', gameScene: 'endGame' });
+    expect(next).toMatchObject({
+      dungeon: [],
+      room: c,
+      progress: 0,
+      gameState: '',
+      gameScene: 'room',
+    });
+  });
+
+  it('declares victory once the final room is cleared', () => {
+    const next = deal(state({ dungeon: [], room: [] }));
+    expect(next).toMatchObject({ room: [], gameState: 'You won!', gameScene: 'endGame' });
   });
 });
 
@@ -197,9 +208,22 @@ describe('playCard', () => {
     expect(next).toMatchObject({ gameState: 'Game over', gameScene: 'endGame' });
   });
 
-  it('KNOWN BUG #1: a killing blow on the last card in a room erases "Game over"', () => {
-    const next = playCard(state({ dungeon: s, room: [room[3]], hp: 2 }), room[3]);
-    expect(next).toMatchObject({ gameScene: 'endGame', gameState: '' });
+  it('keeps "Game over" when the killing blow is the last card in a room', () => {
+    const next = playCard(
+      state({ dungeon: s, room: [room[3]], hp: 2, regenerate: 3 }),
+      room[3]
+    );
+    expect(next).toMatchObject({
+      gameState: 'Game over',
+      gameScene: 'endGame',
+      hp: -4,
+      dungeon: s,
+    });
+  });
+
+  it('keeps "Game over" when the killing blow clears the final room', () => {
+    const next = playCard(state({ dungeon: [], room: [room[3]], hp: 2 }), room[3]);
+    expect(next).toMatchObject({ gameState: 'Game over', gameScene: 'endGame' });
   });
 
   it('KNOWN BUG #3: clearing a room lets King of Hearts run', () => {
