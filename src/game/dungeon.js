@@ -90,5 +90,5 @@ export const playCard = (state, card) => {
   const afterEffect = applyCardEffect(state, card);
   const room = afterEffect.room.filter((roomCard) => !isSameCard(roomCard, card));
   const next = { ...afterEffect, room, isRoomComplete: room.length <= 1, retreat: false };
-  return room.length === 0 ? deal(next) : next;
+  return room.length === 0 && next.gameScene !== 'endGame' ? deal(next) : next;
 };
