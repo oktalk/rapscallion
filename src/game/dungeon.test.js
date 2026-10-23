@@ -1,4 +1,4 @@
-import { initialGameState, newGame, run, nextRoom, deal, playCard } from './dungeon';
+import { initialGameState, newGame, run, nextRoom, deal, playCard, runStats } from './dungeon';
 import { decks } from './decks';
 
 const noShuffle = () => 0.999999;
@@ -232,5 +232,85 @@ describe('playCard', () => {
       room[2]
     );
     expect(next.retreat).toBe(true);
+  });
+});
+
+describe('run stats counters', () => {
+  it('newGame counts the opening room and no runs', () => {
+    expect(newGame(initialGameState, 'standard', noShuffle)).toMatchObject({
+      roomsEntered: 1,
+      timesRun: 0,
+    });
+  });
+
+  it('newGame resets the counters from a finished game', () => {
+    const finished = state({ roomsEntered: 9, timesRun: 3, gameScene: 'endGame' });
+    expect(newGame(finished, 'standard', noShuffle)).toMatchObject({
+      roomsEntered: 1,
+      timesRun: 0,
+    });
+  });
+
+  it('run counts a run and the room it leads to', () => {
+    const next = run(state({ dungeon: s, room: c, roomsEntered: 2, timesRun: 1 }), noShuffle);
+    expect(next).toMatchObject({ roomsEntered: 3, timesRun: 2 });
+  });
+
+  it('nextRoom counts the new room but not a run', () => {
+    const next = nextRoom(state({ dungeon: s, room: [c[0]], roomsEntered: 2, timesRun: 1 }), noShuffle);
+    expect(next).toMatchObject({ roomsEntered: 3, timesRun: 1 });
+  });
+
+  it('deal counts the room dealt after clearing one', () => {
+    const next = deal(state({ dungeon: s, room: [], roomsEntered: 4 }));
+    expect(next.roomsEntered).toBe(5);
+  });
+
+  it('reaching the empty winning room does not count as a room', () => {
+    expect(deal(state({ dungeon: [], room: [], roomsEntered: 4 })).roomsEntered).toBe(4);
+    expect(nextRoom(state({ dungeon: [], room: [], roomsEntered: 4 }), noShuffle).roomsEntered).toBe(
+      4
+    );
+  });
+});
+
+describe('runStats', () => {
+  it('summarizes a won run', () => {
+    const won = state({
+      dungeon: [],
+      room: [],
+      dungeonSize: 48,
+      hp: 12,
+      xp: 150,
+      roomsEntered: 14,
+      timesRun: 2,
+      gameState: 'You won!',
+      gameScene: 'endGame',
+    });
+    expect(runStats(won)).toEqual({
+      won: true,
+      xp: 150,
+      hp: 12,
+      cardsCleared: 48,
+      deckSize: 48,
+      roomsEntered: 14,
+      timesRun: 2,
+    });
+  });
+
+  it('counts cards left in the dungeon and the room as not cleared on a loss', () => {
+    const lost = state({
+      dungeon: s,
+      room: [c[0], c[1]],
+      dungeonSize: 48,
+      hp: 3,
+      gameState: 'Game over',
+      gameScene: 'endGame',
+    });
+    expect(runStats(lost)).toMatchObject({ won: false, cardsCleared: 41, deckSize: 48 });
+  });
+
+  it('shows no less than 0 HP after a killing blow', () => {
+    expect(runStats(state({ hp: -6, gameState: 'Game over' })).hp).toBe(0);
   });
 });

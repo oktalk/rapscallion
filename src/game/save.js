@@ -30,6 +30,8 @@ const SAVED_FIELDS = {
   progress: isCount,
   retreat: isBoolean,
   isRoomComplete: isBoolean,
+  roomsEntered: isCount,
+  timesRun: isCount,
   gameVariant: isString,
   gameMode: (value) => isString(value) && Object.hasOwn(VARIANTS, value),
 };
@@ -72,6 +74,8 @@ const isPlausibleRun = (run) => {
     run.potionLimit === variant.potionLimit &&
     run.breakableShield === variant.breakableShield &&
     (run.potionLimit || !run.potionDrank) &&
+    run.roomsEntered >= 1 &&
+    run.timesRun < run.roomsEntered &&
     isPlausibleShield(run, variant, cardsInPlay)
   );
 };

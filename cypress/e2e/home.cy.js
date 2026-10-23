@@ -1,3 +1,5 @@
+import { initialGameState, serializeRun, SAVE_KEY } from '../../src/game';
+
 describe('template spec', () => {
   beforeEach(() => {
     cy.visit('/')
@@ -71,6 +73,39 @@ describe('template spec', () => {
 
       cy.reload();
       cy.get('[data-testid="continue-game"]').should('not.exist');
+    });
+  });
+
+  context('End game screen', () => {
+    // A save with one potion left in the final room, so a single click wins.
+    // The deck is shuffled, so seeding a save is the only way to reach the
+    // end screen deterministically.
+    const oneCardFromVictory = serializeRun({
+      ...initialGameState,
+      dungeonSize: 48,
+      progress: 0,
+      hp: 10,
+      xp: 120,
+      roomsEntered: 13,
+      timesRun: 2,
+      room: [{ suit: 'hearts', number: 4 }],
+      gameScene: 'room',
+    });
+
+    it('shows the stats for a won run', () => {
+      cy.window().then((win) => win.localStorage.setItem(SAVE_KEY, oneCardFromVictory));
+      cy.reload();
+      cy.get('[data-testid="continue-game"]').click();
+      cy.get('[data-test="card"]').click();
+
+      cy.get('[data-testid="end-game-result"]')
+        .should('have.class', 'is-win')
+        .and('contain', 'You won!');
+      cy.get('[data-testid="stat-xp"]').should('contain', 'Final XP: 120');
+      cy.get('[data-testid="stat-hp"]').should('contain', 'HP remaining: 14');
+      cy.get('[data-testid="stat-cards"]').should('contain', 'Cards cleared: 48 / 48');
+      cy.get('[data-testid="stat-rooms"]').should('contain', 'Rooms entered: 13');
+      cy.get('[data-testid="stat-runs"]').should('contain', 'Times run: 2');
     });
   });
 })

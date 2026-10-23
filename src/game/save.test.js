@@ -33,6 +33,8 @@ const midRun = {
   progress: 2,
   retreat: false,
   isRoomComplete: false,
+  roomsEntered: 11,
+  timesRun: 2,
   gameScene: 'room',
   gameMode: 'standard',
   gameVariant: 'Basic game',
@@ -80,6 +82,8 @@ describe('serializeRun / parseSavedRun', () => {
       progress: 2,
       retreat: false,
       isRoomComplete: false,
+      roomsEntered: 11,
+      timesRun: 2,
       gameVariant: 'Basic game',
       gameMode: 'standard',
       gameScene: 'room',
@@ -128,6 +132,8 @@ describe('serializeRun / parseSavedRun', () => {
     ['a non-boolean retreat', { retreat: 'yes' }],
     ['a non-boolean potionDrank', { potionDrank: 1 }],
     ['an unknown game mode', { gameMode: 'cheater' }],
+    ['a missing roomsEntered (saved before run stats)', { roomsEntered: undefined }],
+    ['a missing timesRun (saved before run stats)', { timesRun: undefined }],
   ])('rejects a save with %s', (_label, overrides) => {
     expect(parseSavedRun(savedWith(overrides))).toBeNull();
   });
@@ -189,6 +195,7 @@ describe('parseSavedRun rejects saves the game rules could not produce', () => {
       potionLimit,
       breakableShield,
       shield: startingShield,
+      roomsEntered: 1,
       gameVariant: description,
       gameMode: mode,
       ...overrides,
@@ -251,6 +258,8 @@ describe('parseSavedRun rejects saves the game rules could not produce', () => {
     ['a shield rank with no shield', { shield: 0, shieldRank: 4 }],
     ['negative xp', { xp: -5 }],
     ['fractional hp', { hp: 12.5 }],
+    ['no rooms entered', { roomsEntered: 0, timesRun: 0 }],
+    ['as many runs as rooms entered', { roomsEntered: 3, timesRun: 3 }],
   ])('rejects %s', (_label, overrides) => {
     expect(parse({ ...midRun, ...overrides })).toBeNull();
   });

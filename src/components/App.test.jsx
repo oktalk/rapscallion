@@ -102,6 +102,7 @@ describe('saving and resuming a run', () => {
         ...game.initialGameState,
         dungeonSize: 48,
         progress: 0,
+        roomsEntered: 1,
         gameScene: 'room',
         ...overrides,
       })
@@ -175,6 +176,27 @@ describe('saving and resuming a run', () => {
     expect(savedRun()).toBeNull();
   });
 
+  test('losing shows the stats for the run', () => {
+    seedRun({
+      hp: 5,
+      xp: 30,
+      roomsEntered: 6,
+      timesRun: 2,
+      room: [card('spades', 14), card('hearts', 3)],
+    });
+    render(<App />);
+    fireEvent.click(screen.getByTestId('continue-game'));
+
+    playFirstCard('Demon');
+
+    expect(screen.getByTestId('end-game-result')).toHaveClass('is-loss');
+    expect(screen.getByTestId('stat-xp')).toHaveTextContent('30');
+    expect(screen.getByTestId('stat-hp')).toHaveTextContent('0');
+    expect(screen.getByTestId('stat-cards')).toHaveTextContent('47 / 48');
+    expect(screen.getByTestId('stat-rooms')).toHaveTextContent('6');
+    expect(screen.getByTestId('stat-runs')).toHaveTextContent('2');
+  });
+
   test('winning clears the save', () => {
     seedRun({ hp: 10, dungeon: [], room: [card('hearts', 3)] });
     render(<App />);
@@ -184,6 +206,18 @@ describe('saving and resuming a run', () => {
 
     expect(screen.getByText('You won!')).toBeInTheDocument();
     expect(savedRun()).toBeNull();
+  });
+
+  test('winning shows a full deck cleared and the HP left', () => {
+    seedRun({ hp: 10, dungeon: [], room: [card('hearts', 3)] });
+    render(<App />);
+    fireEvent.click(screen.getByTestId('continue-game'));
+
+    playFirstCard('Potion');
+
+    expect(screen.getByTestId('end-game-result')).toHaveClass('is-win');
+    expect(screen.getByTestId('stat-hp')).toHaveTextContent('13');
+    expect(screen.getByTestId('stat-cards')).toHaveTextContent('48 / 48');
   });
 
   test('a corrupted save is discarded and the title screen loads normally', () => {
